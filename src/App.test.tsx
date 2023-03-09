@@ -11,7 +11,7 @@ describe('App', () => {
 
     // expect
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
-      'Hello world'
+      'Hello World'
     );
   });
 });
