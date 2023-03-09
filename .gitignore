@@ -110,6 +110,7 @@ dist-ssr
 !.vscode/extensions.json
 .idea
 .DS_Store
+.husky
 *.suo
 *.ntvs*
 *.njsproj
