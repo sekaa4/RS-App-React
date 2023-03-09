@@ -12,9 +12,7 @@ describe('App', () => {
     // act
 
     // expect
-    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
-      'Hello World'
-    );
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Hello World');
   });
 
   it('Renders not found if invalid path', () => {
@@ -26,8 +24,6 @@ describe('App', () => {
     );
 
     // expect
-    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
-      'It is 404 page'
-    );
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('It is 404 page');
   });
 });
