@@ -1,0 +1,27 @@
+@import 'src/assets/styles/index.scss';
+
+div[id='root'] {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  @extend %font-prim;
+  @include font($size: 1.4rem, $height: 2.6rem, $weight: normal);
+  background-color: var(--color-main-background);
+  @extend %transition;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(221, 218, 213);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #3f4244;
+  border-radius: 20px;
+  border: 2px solid rgb(221, 218, 213);
+}

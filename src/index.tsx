@@ -1,7 +1,7 @@
-import { WrappedApp } from 'App/App';
+import './index.scss';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.scss';
+import { WrappedApp } from 'App/App';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
