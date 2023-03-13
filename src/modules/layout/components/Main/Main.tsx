@@ -4,9 +4,9 @@ import { Outlet } from 'react-router-dom';
 class Main extends PureComponent {
   render() {
     return (
-      <div>
+      <main>
         <Outlet />
-      </div>
+      </main>
     );
   }
 }
