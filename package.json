@@ -8,6 +8,7 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "test": "vitest",
+    "coverage": "vitest run --coverage",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "prettier": "npx prettier --write ./",
@@ -26,6 +27,8 @@
     "@typescript-eslint/eslint-plugin": "^5.54.1",
     "@typescript-eslint/parser": "^5.54.1",
     "@vitejs/plugin-react": "^3.1.0",
+    "@vitest/coverage-c8": "^0.29.2",
+    "@vitest/coverage-istanbul": "^0.29.2",
     "eslint": "^8.2.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^17.0.0",
@@ -42,10 +45,11 @@
     "sass": "^1.58.3",
     "typescript": "^4.9.3",
     "vite": "^4.1.0",
+    "vite-tsconfig-paths": "^4.0.5",
     "vitest": "^0.29.2"
   },
   "lint-staged": {
-    "*.{js, html, css,md,vue,json,ts,tsx,jsx}": [
+    "*.{js,css,ts,tsx,jsx}": [
       "eslint .",
       "npx prettier --write ./"
     ]
