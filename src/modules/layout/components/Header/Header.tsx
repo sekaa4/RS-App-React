@@ -11,7 +11,7 @@ export default function Header() {
 
   return (
     <header>
-      <NavLink to="/home" className={isActiveLink}>
+      <NavLink to="/" className={isActiveLink}>
         Home
       </NavLink>
       <NavLink to="/about" className={isActiveLink}>
