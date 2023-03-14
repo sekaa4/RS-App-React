@@ -2,20 +2,21 @@ import { describe, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
-import { WrappedApp, App } from './App';
+import App from './App';
+import WrappedApp from './WrappedApp';
 
 describe('App', () => {
-  it('Renders hello world', () => {
+  it('Renders <Home Page>', () => {
     // arrange
     render(<WrappedApp />);
 
     // act
 
     // expect
-    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Hello World');
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Home Page');
   });
 
-  it('Renders not found if invalid path', () => {
+  it('Renders <Not Found> if invalid path', () => {
     // arrange
     render(
       <MemoryRouter initialEntries={["/this-route-doesn't-exist"]}>
@@ -24,6 +25,6 @@ describe('App', () => {
     );
 
     // expect
-    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('It is 404 page');
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Not Found Page');
   });
 });
