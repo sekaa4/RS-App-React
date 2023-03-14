@@ -9,10 +9,9 @@
     "preview": "vite preview",
     "test": "vitest",
     "coverage": "vitest run --coverage",
-    "lint": "eslint .",
-    "lint:fix": "eslint --fix .",
-    "prettier": "npx prettier --write ./",
-    "prepare": "husky install"
+    "lint": "eslint --debug src/",
+    "lint:write": "eslint --debug src/ --fix",
+    "prettier": "npx prettier --write ./"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -48,10 +47,15 @@
     "vite-tsconfig-paths": "^4.0.5",
     "vitest": "^0.29.2"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "lint-staged": {
     "*.{js,css,ts,tsx,jsx}": [
-      "eslint .",
-      "npx prettier --write ./"
+      "npm run lint:write",
+      "git add"
     ]
   }
 }
