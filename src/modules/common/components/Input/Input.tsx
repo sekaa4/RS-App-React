@@ -1,18 +1,29 @@
-/* eslint-disable react/sort-comp */
 import Constants from 'models/Constants';
 import { ChangeEvent, Component } from 'react';
 
-interface InitialState {
+interface InputState {
   value: string;
 }
-export default class Input extends Component {
-  constructor(props = {}) {
+export default class Input extends Component<Record<string, never>, InputState> {
+  constructor(props: Record<string, never>) {
     super(props);
     this.state = {
       value: localStorage.getItem(Constants.SEARCH_KEY) ?? '',
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.onUnload = this.onUnload.bind(this);
+  }
+
+  componentDidMount() {
+    window.addEventListener(Constants.BEFOREUNLOAD, this.onUnload);
+  }
+
+  componentWillUnmount() {
+    const { value } = this.state;
+    localStorage.setItem(Constants.SEARCH_KEY, value);
+
+    window.removeEventListener(Constants.BEFOREUNLOAD, this.onUnload);
   }
 
   handleChange(e: ChangeEvent<HTMLInputElement>) {
@@ -24,17 +35,13 @@ export default class Input extends Component {
     });
   }
 
-  componentDidMount() {}
-
-  componentDidUpdate() {}
-
-  componentWillUnmount() {
-    const { value } = this.state as InitialState;
-    localStorage.setItem('key', value);
+  onUnload() {
+    const { value } = this.state;
+    localStorage.setItem(Constants.SEARCH_KEY, value);
   }
 
   render() {
-    const { value } = this.state as InitialState;
+    const { value } = this.state;
 
     return (
       <div>
