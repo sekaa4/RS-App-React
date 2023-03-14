@@ -1,12 +1,13 @@
+import { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 
-function NotFound() {
-  return (
-    <>
-      <h1>It is 404 page</h1>
-      <Link to="/">Go Home</Link>
-    </>
-  );
+export default class NotFound extends PureComponent {
+  render() {
+    return (
+      <>
+        <h2>It is 404 page</h2>
+        <Link to="/">Go Home</Link>
+      </>
+    );
+  }
 }
-
-export default NotFound;

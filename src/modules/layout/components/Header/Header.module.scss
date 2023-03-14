@@ -2,8 +2,8 @@
   color: green;
   pointer-events: none;
   cursor: pointer;
-}
 
-.false {
-  color: red;
+  &:hover {
+    text-decoration: underline;
+  }
 }

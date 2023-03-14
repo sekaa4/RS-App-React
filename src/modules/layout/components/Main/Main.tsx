@@ -1,7 +1,7 @@
-import { Component, PureComponent } from 'react';
+import { PureComponent } from 'react';
 import { Outlet } from 'react-router-dom';
 
-class Main extends PureComponent {
+export default class Main extends PureComponent {
   render() {
     return (
       <main>
@@ -10,5 +10,3 @@ class Main extends PureComponent {
     );
   }
 }
-
-export default Main;

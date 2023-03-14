@@ -1,18 +1,18 @@
-import { Component, PureComponent } from 'react';
+import { PureComponent } from 'react';
+import { withRouter } from 'utils/withRouterHOC';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 
-class Layout extends PureComponent {
+export default class Layout extends PureComponent {
   render() {
+    const HeaderWithRouterProps = withRouter(Header);
     return (
       <>
-        <Header />
+        <HeaderWithRouterProps />
         <Main />
         <Footer />
       </>
     );
   }
 }
-
-export default Layout;

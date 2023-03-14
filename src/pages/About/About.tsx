@@ -1,7 +1,11 @@
-import { Link } from 'react-router-dom';
+import { PureComponent } from 'react';
 
-function About() {
-  return <h1>It&apos;s about page</h1>;
+export default class About extends PureComponent {
+  render() {
+    return (
+      <div>
+        <h2>It&apos;s about page</h2>
+      </div>
+    );
+  }
 }
-
-export default About;

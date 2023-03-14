@@ -1,13 +1,14 @@
 import { Button, Input } from 'modules/common';
+import { PureComponent } from 'react';
 
-function Home() {
-  return (
-    <div>
-      <h1>Hello World</h1>
-      <Input />
-      <Button />
-    </div>
-  );
+export default class Home extends PureComponent {
+  render() {
+    return (
+      <div>
+        <h2>Home Page</h2>
+        <Input />
+        <Button />
+      </div>
+    );
+  }
 }
-
-export default Home;
