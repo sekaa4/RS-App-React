@@ -14,7 +14,8 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./src/setupTests.ts'],
     coverage: {
-      provider: 'istanbul', // or c8'
+      enabled: true,
+      provider: 'c8', // or istanbul'
       all: true,
       skipFull: true,
       reporter: 'text',
