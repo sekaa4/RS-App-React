@@ -10,7 +10,7 @@ export default class Card extends PureComponent<CardProps> {
     const {
       data: { body, id, img, title, userId },
     } = this.props;
-    // const imgURL = `${import.meta.env.BASE_URL}assets/images/${img}`;
+
     return (
       <div>
         <img src={img} alt="cat" />
