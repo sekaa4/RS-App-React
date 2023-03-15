@@ -11,7 +11,8 @@
     "coverage": "vitest run --coverage",
     "lint": "eslint --debug src/",
     "lint:write": "eslint --debug src/ --fix",
-    "prettier": "npx prettier --write ./"
+    "prettier": "npx prettier --write ./",
+    "deploy": "npm run build && npx gh-pages -d dist"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -37,6 +38,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
+    "gh-pages": "^5.0.0",
     "husky": "^8.0.3",
     "jsdom": "^21.1.0",
     "lint-staged": "^13.1.2",
