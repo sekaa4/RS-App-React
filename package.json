@@ -2,6 +2,7 @@
   "name": "rs-app-react",
   "private": true,
   "version": "0.0.0",
+  "homepage": "https://sekaa4.github.io/RS-App-React/",
   "type": "module",
   "scripts": {
     "dev": "vite",
