@@ -1,8 +1,12 @@
 @import 'src/assets/styles/index.scss';
 
 div[id='root'] {
+  display: flex;
+  position: relative;
+  flex-direction: column;
   height: 100%;
   width: 100%;
+  row-gap: 2rem;
 }
 
 body {
@@ -10,6 +14,27 @@ body {
   @include font($size: 1.4rem, $height: 2.6rem, $weight: normal);
   background-color: var(--color-main-background);
   @extend %transition;
+}
+
+h1 {
+  @include font($size: 2.4rem, $height: 2.6rem, $weight: bold);
+
+  @include media-small-tablet {
+    @include font($size: 2.2rem, $height: 2.6rem, $weight: bold);
+  }
+}
+
+h2 {
+  @include font($size: 2.2rem, $height: 2.6rem, $weight: normal);
+
+  @include media-small-tablet {
+    @include font($size: 2rem, $height: 2.6rem, $weight: normal);
+  }
+}
+
+span {
+  display: inline-block;
+  @include font($size: 1.4rem, $height: 1.8rem, $weight: normal);
 }
 
 ::-webkit-scrollbar {

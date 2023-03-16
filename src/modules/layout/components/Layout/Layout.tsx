@@ -7,6 +7,7 @@ import Main from '../Main/Main';
 export default class Layout extends PureComponent {
   render() {
     const HeaderWithRouterProps = withRouter(Header);
+
     return (
       <>
         <HeaderWithRouterProps />

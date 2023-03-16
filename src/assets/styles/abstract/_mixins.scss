@@ -6,7 +6,13 @@
 }
 
 @mixin media-tablet {
-  @media screen and (max-width: 1585px) {
+  @media screen and (max-width: 770px) {
+    @content;
+  }
+}
+
+@mixin media-small-tablet {
+  @media screen and (max-width: 510px) {
     @content;
   }
 }

@@ -1,5 +1,6 @@
 /* eslint-disable class-methods-use-this */
 import { Component } from 'react';
+import cls from './Button.module.scss';
 
 interface ButtonProps {
   handleClick?: () => void;
@@ -17,11 +18,9 @@ export default class Button extends Component<ButtonProps> {
 
   render() {
     return (
-      <div>
-        <button type="button" onClick={this.handleClick}>
-          Click
-        </button>
-      </div>
+      <button type="button" onClick={this.handleClick} className={cls.button}>
+        search
+      </button>
     );
   }
 }

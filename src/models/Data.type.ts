@@ -1,8 +1,12 @@
 interface Data {
   userId: number;
   id: number;
-  title: string;
+  name: string;
   body: string;
+  birthDate: string;
+  age: number;
+  gender: 'male' | 'female';
+  breeds: string;
   img: string;
 }
 

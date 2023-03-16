@@ -4,7 +4,7 @@ export default class About extends PureComponent {
   render() {
     return (
       <div>
-        <h2>It&apos;s about page</h2>
+        <h2>About Page</h2>
       </div>
     );
   }

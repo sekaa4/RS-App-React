@@ -1,11 +1,16 @@
 import Constants from 'models/Constants';
 import { ChangeEvent, Component } from 'react';
+import cls from './Input.module.scss';
 
 interface InputState {
   value: string;
 }
-export default class Input extends Component<Record<string, never>, InputState> {
-  constructor(props: Record<string, never>) {
+
+interface InputProps {
+  classNames?: string[];
+}
+export default class Input extends Component<InputProps, InputState> {
+  constructor(props: InputProps) {
     super(props);
     this.state = {
       value: localStorage.getItem(Constants.SEARCH_KEY) ?? '',
@@ -42,19 +47,19 @@ export default class Input extends Component<Record<string, never>, InputState> 
 
   render() {
     const { value } = this.state;
+    const { classNames = '' } = this.props;
 
     return (
-      <div>
-        <label htmlFor="search-bar">
-          <input
-            type="text"
-            onChange={this.handleChange}
-            value={value}
-            id="search-bar"
-            placeholder="enter value here"
-          />
-        </label>
-      </div>
+      <label htmlFor="search-bar" className={[...classNames].join(' ')}>
+        <input
+          type="text"
+          onChange={this.handleChange}
+          value={value}
+          id="search-bar"
+          placeholder="Search bar..."
+          className={cls['input-search']}
+        />
+      </label>
     );
   }
 }

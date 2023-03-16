@@ -1,0 +1,25 @@
+@import 'src/assets/styles/abstract/_mixins.scss';
+
+.card-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  column-gap: 2%;
+  row-gap: 2rem;
+
+  & > * {
+    flex-basis: 32%;
+  }
+
+  @include media-tablet {
+    & > * {
+      flex-basis: 48%;
+    }
+  }
+
+  @include media-small-tablet {
+    & > * {
+      flex-basis: 98%;
+    }
+  }
+}

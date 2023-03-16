@@ -11,7 +11,8 @@ interface ActiveObjectLink {
 
 export default class Header extends PureComponent<WithRouterProps> {
   render() {
-    const isActiveLink = ({ isActive }: ActiveObjectLink) => (isActive ? cls['active-link'] : '');
+    const isActiveLink = ({ isActive }: ActiveObjectLink) =>
+      isActive ? cls['active-link'] : cls.link;
     const { location } = this.props;
 
     let title: string;
@@ -28,11 +29,11 @@ export default class Header extends PureComponent<WithRouterProps> {
     }
 
     return (
-      <header>
-        <div>
+      <header className={cls.container}>
+        <div className={cls.header}>
           <h1>{title}</h1>
           <nav>
-            <ul>
+            <ul className={cls['link-list']}>
               <li>
                 <NavLink to="/" className={isActiveLink}>
                   Home

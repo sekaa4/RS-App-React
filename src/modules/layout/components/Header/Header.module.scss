@@ -1,9 +1,61 @@
-.active-link {
-  color: green;
-  pointer-events: none;
-  cursor: pointer;
+@import 'src/assets/styles/abstract/_mixins.scss';
+
+.container {
+  position: fixed;
+  z-index: 1;
+  background-color: var(--color-header-background);
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  @include font($size: 2rem, $height: 2.6rem, $weight: normal);
+  color: var(--color-header-text);
+
+  padding: 1.5rem;
+  margin: 0 auto;
+  max-width: var(--content-width);
+}
+
+.link {
+  display: inline-block;
+  height: 3rem;
+  width: 13rem;
+  background-color: var(--color-disabled);
+  color: var(--color-text-white);
+  border-radius: 5px;
+  text-align: center;
 
   &:hover {
     text-decoration: underline;
+    color: var(--color-background);
   }
+
+  @include media-small-tablet {
+    width: 9rem;
+  }
+}
+
+.active-link {
+  display: inline-block;
+  color: var(--color-text-white);
+  pointer-events: none;
+  height: 3rem;
+  width: 13rem;
+  background-color: var(--color-background);
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+
+  @include media-small-tablet {
+    width: 9rem;
+  }
+}
+
+.link-list {
+  display: flex;
+  column-gap: 2rem;
+  flex-wrap: wrap;
+  row-gap: 1rem;
 }
