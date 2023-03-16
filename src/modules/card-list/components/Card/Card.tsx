@@ -1,5 +1,6 @@
 import type Data from 'models/Data.type';
-import { Component, PureComponent } from 'react';
+import { PureComponent } from 'react';
+import cls from './Card.module.scss';
 
 interface CardProps {
   data: Data;
@@ -8,14 +9,32 @@ interface CardProps {
 export default class Card extends PureComponent<CardProps> {
   render() {
     const {
-      data: { body, id, img, title, userId },
+      data: { body, name, age, birthDate, gender, breeds, img },
     } = this.props;
 
     return (
-      <div>
-        <img src={img} alt="cat" />
-        <div>{title}</div>
-        <div>{body}</div>
+      <div className={cls.card}>
+        <img src={img} alt="cat" className={cls.image} />
+        <div className={cls.description}>
+          <span>
+            <b>name:</b> {name}
+          </span>
+          <span>
+            <b>description:</b> {body}
+          </span>
+          <span>
+            <b>age:</b> {age}
+          </span>
+          <span>
+            <b>birth date:</b> {birthDate}
+          </span>
+          <span>
+            <b>gender:</b> {gender}
+          </span>
+          <span>
+            <b>breeds:</b> {breeds}
+          </span>
+        </div>
       </div>
     );
   }
