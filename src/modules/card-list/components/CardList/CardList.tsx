@@ -21,11 +21,9 @@ export default class CardList extends Component<Record<string, never>, CardListS
     };
   }
 
-  componentDidMount() {
-    setTimeout(async () => {
-      const data = await getData();
-      this.setState({ data });
-    }, 2000);
+  async componentDidMount() {
+    const data = await getData();
+    this.setState({ data });
   }
 
   render() {
