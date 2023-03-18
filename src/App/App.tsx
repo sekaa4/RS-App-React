@@ -11,7 +11,8 @@ export default class App extends PureComponent {
           <Route index element={<Home />} />
           <Route path="home" element={<Navigate to="/" replace />} />
           <Route path="about" element={<About />} />
-          <Route path="*" element={<NotFound />} />
+          <Route path="404" element={<NotFound />} />
+          <Route path="*" element={<Navigate to="404" replace />} />
         </Route>
       </Routes>
     );

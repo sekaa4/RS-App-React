@@ -1,3 +1,4 @@
+import Constants from 'models/Constants';
 import Endpoints from 'models/Endpoints';
 import { PureComponent } from 'react';
 import { NavLink } from 'react-router-dom';
@@ -18,13 +19,16 @@ export default class Header extends PureComponent<WithRouterProps> {
     let title: string;
     switch (location.pathname) {
       case Endpoints.HOME:
-        title = 'Home Page';
+        title = Constants.HOME_PAGE;
         break;
       case Endpoints.ABOUT:
-        title = 'About Page';
+        title = Constants.ABOUT_PAGE;
+        break;
+      case Endpoints.NOT_FOUND:
+        title = Constants.NOT_FOUND_PAGE;
         break;
       default:
-        title = 'Not Found Page';
+        title = Constants.NOT_FOUND_PAGE;
         break;
     }
 
