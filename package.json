@@ -6,12 +6,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && vite build",
+    "build": "tsc --noEmit && vite build && npm run make:redirects",
+    "make:redirects": "echo /* /index.html 200 > dist/_redirects",
     "preview": "vite preview",
     "test": "vitest --reporter=verbose",
-    "coverage": "vitest run --coverage",
+    "coverage": "vitest run --coverage --reporter=verbose",
     "lint": "eslint --debug src/",
-    "lint:write": "eslint --debug src/ --fix",
+    "lint:write": "eslint src/ --fix",
     "prettier": "npx prettier --write ./",
     "deploy": "npm run build && npx gh-pages -d dist"
   },
@@ -23,6 +24,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
+    "@testing-library/user-event": "^14.4.3",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "@typescript-eslint/eslint-plugin": "^5.54.1",
