@@ -5,9 +5,9 @@
   "homepage": "https://sekaa4.github.io/RS-App-React/",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc --noEmit && vite build && npm run make:redirects",
     "make:redirects": "echo /* /index.html 200 > dist/_redirects",
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build && npm run",
     "preview": "vite preview",
     "test": "vitest --reporter=verbose",
     "coverage": "vitest run --coverage --reporter=verbose",
