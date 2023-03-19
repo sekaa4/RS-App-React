@@ -18,7 +18,7 @@ export default class Header extends PureComponent<WithRouterProps> {
 
     let title: string;
     switch (location.pathname) {
-      case Endpoints.HOME:
+      case Endpoints.MAIN:
         title = Constants.HOME_PAGE;
         break;
       case Endpoints.ABOUT:
@@ -39,12 +39,12 @@ export default class Header extends PureComponent<WithRouterProps> {
           <nav>
             <ul className={cls['link-list']}>
               <li>
-                <NavLink to="/" className={isActiveLink}>
+                <NavLink to={Endpoints.MAIN} className={isActiveLink}>
                   Home
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/about" className={isActiveLink}>
+                <NavLink to={Endpoints.ABOUT} className={isActiveLink}>
                   About
                 </NavLink>
               </li>
