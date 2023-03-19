@@ -12,8 +12,11 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
+    clearMocks: true,
     setupFiles: ['./src/setupTests.ts'],
     coverage: {
+      include: ['src/*/'],
+      exclude: ['src/*.{ts,tsx}', 'src/models/*.{ts,tsx}'],
       enabled: true,
       provider: 'c8', // or istanbul'
       all: true,
