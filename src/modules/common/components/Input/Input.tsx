@@ -31,10 +31,10 @@ export default class Input extends Component<InputProps, InputState> {
     window.removeEventListener(Constants.BEFOREUNLOAD, this.onUnload);
   }
 
-  handleChange(e: ChangeEvent<HTMLInputElement>) {
+  handleChange(event: ChangeEvent<HTMLInputElement>) {
     const {
       target: { value },
-    } = e;
+    } = event;
     this.setState(() => {
       return {
         value,

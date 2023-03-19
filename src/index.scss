@@ -1,6 +1,6 @@
 @import 'src/assets/styles/index.scss';
 
-div[id='root'] {
+#root {
   display: flex;
   position: relative;
   flex-direction: column;
