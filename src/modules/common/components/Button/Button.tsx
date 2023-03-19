@@ -1,4 +1,3 @@
-/* eslint-disable class-methods-use-this */
 import { Component } from 'react';
 import cls from './Button.module.scss';
 
