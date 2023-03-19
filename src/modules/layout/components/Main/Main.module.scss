@@ -1,0 +1,8 @@
+@import 'src/assets/styles/abstract/_mixins.scss';
+
+.container {
+  margin: 0 auto;
+  max-width: var(--content-width);
+  flex-grow: 1;
+  margin-top: 8.5rem;
+}

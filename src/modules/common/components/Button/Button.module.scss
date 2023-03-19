@@ -1,0 +1,26 @@
+.button {
+  padding: 1rem;
+  font-weight: 600;
+  font-size: 1.4rem;
+  line-height: 1rem;
+  height: 4rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+
+  background: var(--color-header-background);
+  border: 1px solid var(--color-header-text);
+  color: var(--color-header-text);
+
+  &:hover {
+    background: var(--color-hovered);
+    border-color: var(--color-hovered);
+    color: var(--color-text-white);
+  }
+
+  &:disabled {
+    background: var(--color-disabled);
+    border-color: var(--color-disabled);
+    cursor: default;
+  }
+}
