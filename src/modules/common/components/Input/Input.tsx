@@ -32,7 +32,9 @@ export default class Input extends Component<InputProps, InputState> {
   }
 
   handleChange(e: ChangeEvent<HTMLInputElement>) {
-    const { value } = e.target;
+    const {
+      target: { value },
+    } = e;
     this.setState(() => {
       return {
         value,
