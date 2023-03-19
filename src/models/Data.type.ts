@@ -1,3 +1,5 @@
+import GenderType from './Gender.type';
+
 interface Data {
   userId: number;
   id: number;
@@ -5,7 +7,7 @@ interface Data {
   body: string;
   birthDate: string;
   age: number;
-  gender: 'male' | 'female';
+  gender: GenderType;
   breeds: string;
   img: string;
 }
