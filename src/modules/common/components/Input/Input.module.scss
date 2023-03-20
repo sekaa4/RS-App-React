@@ -1,18 +1,11 @@
 @import 'src/assets/styles/abstract/_mixins.scss';
 
-.input-search {
+.input {
   display: block;
   position: relative;
-  @include font($size: 2rem, $height: 3.6rem, $weight: normal);
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  height: 100%;
   outline: none;
-
-  width: 100%;
-  padding: 0 1.3rem;
-  border: 1px solid #e6e6e6;
-  border-radius: 2rem;
 
   &:focus {
     border-color: var(--color-background);
