@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
 
-import Input from './Input';
+import InputSearch from './InputSearch';
 
 let mockLocalStorage: Record<string, string>;
 
@@ -15,14 +15,14 @@ beforeEach(() => {
 
 describe('Testing Input', () => {
   it('should change value Input', async () => {
-    render(<Input />);
+    render(<InputSearch />);
     expect(screen.getByRole('textbox')).toHaveDisplayValue('');
     await userEvent.type(screen.getByRole('textbox'), 'React');
     expect(screen.getByRole('textbox')).toHaveDisplayValue('React');
   });
 
   it('should save in LocalStorage', async () => {
-    const { unmount } = render(<Input />);
+    const { unmount } = render(<InputSearch />);
     await userEvent.type(screen.getByRole('textbox'), 'React');
     unmount();
     expect(screen.queryByRole('textbox')).toBeFalsy();
