@@ -1,4 +1,4 @@
-@import 'src/assets/styles/abstract/_mixins.scss';
+@import '../../../../assets/styles/abstract/mixins';
 
 .card-list {
   display: flex;
@@ -8,7 +8,7 @@
   row-gap: 2rem;
 
   & > * {
-    flex-basis: 32%;
+    flex-basis: 31%;
   }
 
   @include media-tablet {
