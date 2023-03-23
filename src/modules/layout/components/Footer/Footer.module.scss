@@ -1,0 +1,11 @@
+@import 'src/assets/styles/abstract/_mixins.scss';
+
+.container {
+  background-color: var(--color-header-background);
+  @include font($size: 2rem, $height: 2.6rem, $weight: normal);
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+}
