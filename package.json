@@ -11,7 +11,7 @@
     "preview": "vite preview",
     "test": "vitest --reporter=verbose",
     "coverage": "vitest run --coverage --reporter=verbose",
-    "lint": "eslint --debug src/",
+    "lint": "eslint src/",
     "lint:write": "eslint src/ --fix",
     "prettier": "npx prettier --write ./",
     "deploy": "npm run build && npx gh-pages -d dist"
