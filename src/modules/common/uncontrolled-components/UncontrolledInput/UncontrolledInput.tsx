@@ -1,25 +1,30 @@
 import CustomRefObject from 'models/CustomRefObject.type';
-import { createRef, PureComponent } from 'react';
+import { Component, createRef } from 'react';
 import cls from './UncontrolledInput.module.scss';
 
 interface UncontrolledInputProps {
   classNames?: string[];
   type: string;
   id: string;
-  refer?: CustomRefObject;
+  refObject: CustomRefObject;
   name?: string;
   text?: string;
   placeholder?: string;
   inputStyles?: string[];
   defaultValue?: string;
   defaultChecked?: boolean;
+  errorObject: Record<keyof CustomRefObject, false | string>;
 }
-export default class Input extends PureComponent<UncontrolledInputProps> {
+export default class UncontrolledInput extends Component<UncontrolledInputProps> {
   input: React.RefObject<HTMLInputElement>;
 
   constructor(props: UncontrolledInputProps) {
     super(props);
+    const { refObject, errorObject, id } = this.props;
     this.input = createRef<HTMLInputElement>();
+
+    refObject[id] = this.input;
+    errorObject[id] = false;
   }
 
   render() {
@@ -33,27 +38,28 @@ export default class Input extends PureComponent<UncontrolledInputProps> {
       defaultChecked,
       inputStyles = [],
       text = '',
-      refer,
+      errorObject,
     } = this.props;
 
-    if (refer) {
-      refer[id] = this.input;
-    }
+    const isError = errorObject[id];
 
     return (
-      <label htmlFor={id} className={[...classNames].join(' ')}>
-        {text}
-        <input
-          ref={this.input}
-          type={type}
-          name={name}
-          defaultValue={defaultValue}
-          defaultChecked={defaultChecked}
-          id={id}
-          placeholder={placeholder}
-          className={[cls.input, ...inputStyles].join(' ')}
-        />
-      </label>
+      <div>
+        <label htmlFor={id} className={[...classNames].join(' ')}>
+          {text}
+          <input
+            ref={this.input}
+            type={type}
+            name={name}
+            defaultValue={defaultValue}
+            defaultChecked={defaultChecked}
+            id={id}
+            placeholder={placeholder}
+            className={[cls.input, ...inputStyles].join(' ')}
+          />
+        </label>
+        <div className={cls.error}>{isError ?? ''}</div>
+      </div>
     );
   }
 }
