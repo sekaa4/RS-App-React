@@ -11,7 +11,7 @@ export default class Home extends PureComponent {
         <h2>Home Page</h2>
         <div className={cls['home__search-bar']}>
           <InputSearch />
-          <Button />
+          <Button text="search" />
         </div>
         <CardList />
       </div>

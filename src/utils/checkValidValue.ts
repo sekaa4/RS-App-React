@@ -64,7 +64,9 @@ const validateField = (objectRef: CustomRefObject, errObj: ErrorObject) => {
         break;
       case InputType.NUMBER:
         errObj[field] =
-          current.value && +current.value > 0 ? false : 'ERROR: Enter old of your cat';
+          current.value && +current.value >= 0
+            ? false
+            : 'ERROR: Enter correct value old of your cat';
         break;
       case InputType.SELECT_ONE:
         errObj[field] = current.value ? false : 'ERROR: Choose breeds of your cat';

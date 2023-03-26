@@ -9,6 +9,7 @@ interface UncontrolledInputProps {
   refObject: CustomRefObject;
   name?: string;
   text?: string;
+  min?: string;
   placeholder?: string;
   inputStyles?: string[];
   defaultValue?: string;
@@ -33,6 +34,7 @@ export default class UncontrolledInput extends Component<UncontrolledInputProps>
       type = 'text',
       id,
       name,
+      min,
       placeholder = '',
       defaultValue,
       defaultChecked,
@@ -55,6 +57,7 @@ export default class UncontrolledInput extends Component<UncontrolledInputProps>
             defaultValue={defaultValue}
             defaultChecked={defaultChecked}
             id={id}
+            min={min}
             placeholder={placeholder}
             className={[cls.input, ...inputStyles].join(' ')}
           />

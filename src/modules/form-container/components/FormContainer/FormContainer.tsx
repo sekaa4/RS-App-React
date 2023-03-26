@@ -146,7 +146,7 @@ export default class FormContainer extends Component<Record<string, unknown>, Fo
               placeholder="Age of your cat"
               refObject={this.refObject}
               errorObject={this.errorObject}
-              text="Enter the age of your cat:"
+              text="Enter the age of your cat(year):"
             />
             <RadioContainer errorObject={this.errorObject} name="gender">
               <UncontrolledRadioInput
