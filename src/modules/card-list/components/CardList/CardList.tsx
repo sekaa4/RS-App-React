@@ -34,10 +34,13 @@ export default class CardList extends Component<CardListProps, CardListState> {
   }
 
   render() {
+    const { data: curData } = this.props;
     const { data } = this.state;
-    return data ? (
+    const renderData = curData ?? data;
+
+    return renderData ? (
       <div className={cls['card-list']}>
-        {data.map((dataCharacter: Data) => (
+        {renderData.map((dataCharacter: Data) => (
           <Card key={dataCharacter.id} data={dataCharacter} />
         ))}
       </div>
