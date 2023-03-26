@@ -1,7 +1,5 @@
 interface CustomRefObject {
-  [inx: string]: React.RefObject<
-    HTMLFormElement | HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-  >;
+  [inx: string]: React.RefObject<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>;
 }
 
 export default CustomRefObject;

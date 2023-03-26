@@ -5,6 +5,7 @@ enum Constants {
   HOME_PAGE = 'Home Page',
   ABOUT_PAGE = 'About Page',
   FORM_PAGE = 'Form Page',
+  DESCRIPTION_FORM = 'Create card Form',
 }
 
 export default Constants;
