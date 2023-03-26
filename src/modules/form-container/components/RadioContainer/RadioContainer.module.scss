@@ -1,5 +1,15 @@
 .fieldset {
+  display: flex;
+  padding: 1rem;
+  flex-direction: column;
   border: 2px solid black;
+  flex-wrap: wrap;
+}
+
+.radio-group {
+  display: flex;
+  width: 100%;
+  column-gap: 3rem;
 }
 
 .error {

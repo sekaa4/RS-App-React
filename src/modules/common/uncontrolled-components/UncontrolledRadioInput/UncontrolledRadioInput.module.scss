@@ -1,3 +1,8 @@
 .radio-input {
   display: inline-block;
 }
+
+.radio-label {
+  display: flex;
+  column-gap: 1rem;
+}

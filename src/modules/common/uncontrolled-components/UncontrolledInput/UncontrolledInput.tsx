@@ -42,11 +42,12 @@ export default class UncontrolledInput extends Component<UncontrolledInputProps>
     } = this.props;
 
     const isError = errorObject[id];
+    const classes = type === 'checkbox' ? cls['label-checkbox'] : cls.label;
 
     return (
       <div>
-        <label htmlFor={id} className={[...classNames].join(' ')}>
-          {text}
+        <label htmlFor={id} className={[...classNames, classes].join(' ')}>
+          {type !== 'checkbox' ? text : ''}
           <input
             ref={this.input}
             type={type}
@@ -57,6 +58,7 @@ export default class UncontrolledInput extends Component<UncontrolledInputProps>
             placeholder={placeholder}
             className={[cls.input, ...inputStyles].join(' ')}
           />
+          {type === 'checkbox' ? text : ''}
         </label>
         <div className={cls.error}>{isError ?? ''}</div>
       </div>

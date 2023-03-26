@@ -4,6 +4,8 @@
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   outline: none;
+  padding-left: 1rem;
+  border: 1px solid black;
 
   &:focus {
     border-color: var(--color-background);
@@ -17,4 +19,17 @@
 .error {
   color: red;
   height: 3rem;
+}
+
+.label {
+  display: flex;
+  column-gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.label-checkbox {
+  display: flex;
+  column-gap: 1.5rem;
+  flex-wrap: wrap;
 }

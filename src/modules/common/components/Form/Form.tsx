@@ -1,34 +1,30 @@
-import CustomRefObject from 'models/CustomRefObject.type';
-import { createRef, PropsWithChildren, PureComponent } from 'react';
+import { PropsWithChildren, PureComponent } from 'react';
 import cls from './Form.module.scss';
 
 interface FormProps {
-  refer?: CustomRefObject;
-  submitHandler?: (event: React.FormEvent<HTMLFormElement>) => void;
+  refForm: React.RefObject<HTMLFormElement>;
+  description: string;
+  submitHandler: (event: React.FormEvent<HTMLFormElement>) => void;
 }
 export default class Form extends PureComponent<PropsWithChildren<FormProps>> {
-  form: React.RefObject<HTMLFormElement>;
+  refForm: React.RefObject<HTMLFormElement>;
+
+  submitHandler: (event: React.FormEvent<HTMLFormElement>) => void;
 
   constructor(props: PropsWithChildren<FormProps>) {
     super(props);
-    this.form = createRef<HTMLFormElement>();
+    const { refForm, submitHandler } = this.props;
+    this.refForm = refForm;
+    this.submitHandler = submitHandler;
   }
 
   render() {
-    const { children, refer, submitHandler } = this.props;
-    if (refer) {
-      refer.form = this.form;
-    }
+    const { children, description } = this.props;
 
     return (
-      <form
-        ref={this.form}
-        onSubmit={(event) => {
-          submitHandler?.(event);
-        }}
-      >
-        <fieldset>
-          <legend>Description</legend>
+      <form className={cls['form-container']} ref={this.refForm} onSubmit={this.submitHandler}>
+        <fieldset className={cls.fieldset}>
+          <legend className={cls.legend}>{description}</legend>
           {children}
         </fieldset>
       </form>

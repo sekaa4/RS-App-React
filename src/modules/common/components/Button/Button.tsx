@@ -3,6 +3,7 @@ import cls from './Button.module.scss';
 
 interface ButtonProps {
   handleClick?: () => void;
+  text?: string;
   refSubmit?: React.RefObject<HTMLInputElement | HTMLButtonElement>;
 }
 
@@ -24,16 +25,21 @@ export default class Button extends Component<ButtonProps> {
   }
 
   render() {
+    const { text = 'Button' } = this.props;
     if (this.refSubmit) {
       return (
-        <button type="submit" className={cls.button} ref={this.refSubmit}>
-          Submit
+        <button
+          type="submit"
+          className={[cls.button, cls['button-submit']].join(' ')}
+          ref={this.refSubmit}
+        >
+          {text}
         </button>
       );
     }
     return (
       <button type="button" onClick={this.handleClick} className={cls.button}>
-        search
+        {text}
       </button>
     );
   }

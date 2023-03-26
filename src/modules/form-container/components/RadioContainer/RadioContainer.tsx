@@ -14,7 +14,7 @@ export default class RadioContainer extends PureComponent<PropsWithChildren<Radi
     return (
       <fieldset className={cls.fieldset}>
         <legend>Choose Gender of your Cat</legend>
-        {children}
+        <div className={cls['radio-group']}>{children}</div>
         <div className={cls.error}>{isError ?? ''}</div>
       </fieldset>
     );

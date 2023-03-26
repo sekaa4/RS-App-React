@@ -45,8 +45,8 @@ export default class UncontrolledTextArea extends Component<UncontrolledTextArea
 
     return (
       <div>
-        <label htmlFor={id} className={[...classNames].join(' ')}>
-          {text}{' '}
+        <label htmlFor={id} className={[...classNames, cls.label].join(' ')}>
+          {text}
           <textarea
             ref={this.textArea}
             name={name}

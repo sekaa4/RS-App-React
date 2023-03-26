@@ -27,7 +27,7 @@ export default class UncontrolledRadioInput extends Component<UncontrolledRadioI
     const { classNames = '', id, name, inputStyles = [], defaultValue } = this.props;
 
     return (
-      <label htmlFor={id} className={[...classNames].join(' ')}>
+      <label htmlFor={id} className={[...classNames, cls['radio-label']].join(' ')}>
         {defaultValue}
         <input
           ref={this.radioInput}
