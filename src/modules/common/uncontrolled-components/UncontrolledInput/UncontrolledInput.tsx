@@ -1,4 +1,5 @@
 import CustomRefObject from 'models/CustomRefObject.type';
+import InputType from 'models/InputType';
 import { Component, createRef } from 'react';
 import cls from './UncontrolledInput.module.scss';
 
@@ -44,12 +45,12 @@ export default class UncontrolledInput extends Component<UncontrolledInputProps>
     } = this.props;
 
     const isError = errorObject[id];
-    const classes = type === 'checkbox' ? cls['label-checkbox'] : cls.label;
+    const classes = type === InputType.CHECKBOX ? cls['label-checkbox'] : cls.label;
 
     return (
       <div>
         <label htmlFor={id} className={[...classNames, classes].join(' ')}>
-          {type !== 'checkbox' ? text : ''}
+          {type !== InputType.CHECKBOX ? text : ''}
           <input
             ref={this.input}
             type={type}
@@ -61,7 +62,7 @@ export default class UncontrolledInput extends Component<UncontrolledInputProps>
             placeholder={placeholder}
             className={[cls.input, ...inputStyles].join(' ')}
           />
-          {type === 'checkbox' ? text : ''}
+          {type === InputType.CHECKBOX ? text : ''}
         </label>
         <div className={cls.error}>{isError ?? ''}</div>
       </div>

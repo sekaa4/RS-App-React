@@ -1,4 +1,5 @@
 import CustomRefObject from 'models/CustomRefObject.type';
+import InputType from 'models/InputType';
 import { Component, createRef } from 'react';
 import cls from './UncontrolledRadioInput.module.scss';
 
@@ -31,7 +32,7 @@ export default class UncontrolledRadioInput extends Component<UncontrolledRadioI
         {defaultValue}
         <input
           ref={this.radioInput}
-          type="radio"
+          type={InputType.RADIO}
           name={name}
           id={id}
           defaultValue={defaultValue}

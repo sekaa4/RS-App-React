@@ -13,6 +13,7 @@ import {
 import CustomRefObject from 'models/CustomRefObject.type';
 import breeds from 'models/breeds';
 import Constants from 'models/Constants';
+import InputType from 'models/InputType';
 import cls from './FormContainer.module.scss';
 import RadioContainer from '../RadioContainer/RadioContainer';
 
@@ -126,7 +127,7 @@ export default class FormContainer extends Component<Record<string, unknown>, Fo
         >
           <div>
             <UncontrolledInput
-              type="text"
+              type={InputType.TEXT}
               id="name"
               text="Enter the name of your cat:"
               refObject={this.refObject}
@@ -134,14 +135,14 @@ export default class FormContainer extends Component<Record<string, unknown>, Fo
               errorObject={this.errorObject}
             />
             <UncontrolledInput
-              type="date"
+              type={InputType.DATE}
               id="birthDate"
               refObject={this.refObject}
               errorObject={this.errorObject}
               text="Choose the birthday date of your cat:"
             />
             <UncontrolledInput
-              type="number"
+              type={InputType.NUMBER}
               id="age"
               placeholder="Age of your cat"
               refObject={this.refObject}
@@ -183,14 +184,14 @@ export default class FormContainer extends Component<Record<string, unknown>, Fo
               options={breeds}
             />
             <UncontrolledInput
-              type="file"
+              type={InputType.FILE}
               id="img"
               text="Choose your cat image:"
               refObject={this.refObject}
               errorObject={this.errorObject}
             />
             <UncontrolledInput
-              type="checkbox"
+              type={InputType.CHECKBOX}
               id="personalData"
               refObject={this.refObject}
               errorObject={this.errorObject}

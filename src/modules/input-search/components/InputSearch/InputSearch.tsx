@@ -1,4 +1,5 @@
 import Constants from 'models/Constants';
+import InputType from 'models/InputType';
 import { Input } from 'modules/common';
 import { Component, ChangeEvent } from 'react';
 import cls from './InputSearch.module.scss';
@@ -56,7 +57,7 @@ export default class InputSearch extends Component<InputSearchProps, InputSearch
 
     return (
       <Input
-        type="text"
+        type={InputType.TEXT}
         handleChange={this.handleChange}
         value={value}
         id="search-bar"

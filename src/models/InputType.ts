@@ -7,6 +7,8 @@ enum InputType {
   SELECT_ONE = 'select-one',
   TEXTAREA = 'textarea',
   NUMBER = 'number',
+  SUBMIT = 'submit',
+  BUTTON = 'button',
 }
 
 export default InputType;
