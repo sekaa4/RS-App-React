@@ -1,6 +1,6 @@
 import CustomRefObject from 'models/CustomRefObject.type';
 import InputType from 'models/InputType';
-import { Component, createRef } from 'react';
+import { useEffect, useRef } from 'react';
 import cls from './UncontrolledRadioInput.module.scss';
 
 interface UncontrolledRadioInputProps {
@@ -12,33 +12,36 @@ interface UncontrolledRadioInputProps {
   inputStyles?: string[];
   errorObject: Record<keyof CustomRefObject, false | string>;
 }
-export default class UncontrolledRadioInput extends Component<UncontrolledRadioInputProps> {
-  radioInput: React.RefObject<HTMLInputElement>;
+const UncontrolledRadioInput = (props: UncontrolledRadioInputProps) => {
+  const {
+    classNames = '',
+    id,
+    name,
+    inputStyles = [],
+    defaultValue,
+    refObject,
+    errorObject,
+  } = props;
+  const radioInput = useRef<HTMLInputElement>(null);
 
-  constructor(props: UncontrolledRadioInputProps) {
-    super(props);
-    const { refObject, errorObject, name } = this.props;
-    this.radioInput = createRef<HTMLInputElement>();
-
-    refObject.push(this.radioInput);
+  useEffect(() => {
+    refObject.push(radioInput);
     errorObject[name] = false;
-  }
+  }, [refObject, errorObject, name]);
 
-  render() {
-    const { classNames = '', id, name, inputStyles = [], defaultValue } = this.props;
+  return (
+    <label htmlFor={id} className={[...classNames, cls['radio-label']].join(' ')}>
+      {defaultValue}
+      <input
+        ref={radioInput}
+        type={InputType.RADIO}
+        name={name}
+        id={id}
+        defaultValue={defaultValue}
+        className={[cls['radio-input'], ...inputStyles].join(' ')}
+      />
+    </label>
+  );
+};
 
-    return (
-      <label htmlFor={id} className={[...classNames, cls['radio-label']].join(' ')}>
-        {defaultValue}
-        <input
-          ref={this.radioInput}
-          type={InputType.RADIO}
-          name={name}
-          id={id}
-          defaultValue={defaultValue}
-          className={[cls['radio-input'], ...inputStyles].join(' ')}
-        />
-      </label>
-    );
-  }
-}
+export default UncontrolledRadioInput;

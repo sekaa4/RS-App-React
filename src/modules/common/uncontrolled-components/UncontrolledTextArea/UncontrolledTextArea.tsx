@@ -1,5 +1,5 @@
 import CustomRefObject from 'models/CustomRefObject.type';
-import { Component, createRef } from 'react';
+import { useEffect, useRef } from 'react';
 import cls from './UncontrolledTextArea.module.scss';
 
 interface UncontrolledTextAreaProps {
@@ -15,51 +15,47 @@ interface UncontrolledTextAreaProps {
   defaultValue?: string;
   errorObject: Record<keyof CustomRefObject, false | string>;
 }
-export default class UncontrolledTextArea extends Component<UncontrolledTextAreaProps> {
-  textArea: React.RefObject<HTMLTextAreaElement>;
+const UncontrolledTextArea = (props: UncontrolledTextAreaProps) => {
+  const {
+    classNames = '',
+    id,
+    name,
+    text,
+    rows = 4,
+    cols = 28,
+    placeholder = '',
+    defaultValue,
+    textAreaStyles = [],
+    refObject,
+    errorObject,
+  } = props;
+  const textArea = useRef<HTMLTextAreaElement>(null);
 
-  constructor(props: UncontrolledTextAreaProps) {
-    super(props);
-    const { refObject, errorObject, id } = this.props;
-    this.textArea = createRef<HTMLTextAreaElement>();
-
-    refObject[id] = this.textArea;
+  useEffect(() => {
+    refObject[id] = textArea;
     errorObject[id] = false;
-  }
+  }, [refObject, errorObject, id]);
 
-  render() {
-    const {
-      classNames = '',
-      id,
-      name,
-      text,
-      rows = 4,
-      cols = 28,
-      placeholder = '',
-      defaultValue,
-      textAreaStyles = [],
-      errorObject,
-    } = this.props;
+  const isError = errorObject[id];
 
-    const isError = errorObject[id];
+  return (
+    <div>
+      <label htmlFor={id} className={[...classNames, cls.label].join(' ')}>
+        {text}
+        <textarea
+          ref={textArea}
+          name={name}
+          defaultValue={defaultValue}
+          id={id}
+          placeholder={placeholder}
+          className={[cls.textarea, ...textAreaStyles].join(' ')}
+          rows={rows}
+          cols={cols}
+        />
+      </label>
+      <div className={cls.error}>{isError ?? ''}</div>
+    </div>
+  );
+};
 
-    return (
-      <div>
-        <label htmlFor={id} className={[...classNames, cls.label].join(' ')}>
-          {text}
-          <textarea
-            ref={this.textArea}
-            name={name}
-            defaultValue={defaultValue}
-            id={id}
-            placeholder={placeholder}
-            className={[cls.textarea, ...textAreaStyles].join(' ')}
-            rows={rows}
-            cols={cols}
-          />
-        </label>
-        <div className={cls.error}>{isError ?? ''}</div>
-      </div>
-    );
-  }
-}
+export default UncontrolledTextArea;

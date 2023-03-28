@@ -1,6 +1,6 @@
 import CustomRefObject from 'models/CustomRefObject.type';
 import InputType from 'models/InputType';
-import { Component, createRef } from 'react';
+import { useEffect, useRef } from 'react';
 import cls from './UncontrolledInput.module.scss';
 
 interface UncontrolledInputProps {
@@ -17,55 +17,51 @@ interface UncontrolledInputProps {
   defaultChecked?: boolean;
   errorObject: Record<keyof CustomRefObject, false | string>;
 }
-export default class UncontrolledInput extends Component<UncontrolledInputProps> {
-  input: React.RefObject<HTMLInputElement>;
+const UncontrolledInput = (props: UncontrolledInputProps) => {
+  const {
+    classNames = '',
+    type = 'text',
+    id,
+    name,
+    min,
+    placeholder = '',
+    defaultValue,
+    defaultChecked,
+    inputStyles = [],
+    text = '',
+    refObject,
+    errorObject,
+  } = props;
+  const input = useRef<HTMLInputElement>(null);
 
-  constructor(props: UncontrolledInputProps) {
-    super(props);
-    const { refObject, errorObject, id } = this.props;
-    this.input = createRef<HTMLInputElement>();
-
-    refObject[id] = this.input;
+  useEffect(() => {
+    refObject[id] = input;
     errorObject[id] = false;
-  }
+  }, [refObject, errorObject, id]);
 
-  render() {
-    const {
-      classNames = '',
-      type = 'text',
-      id,
-      name,
-      min,
-      placeholder = '',
-      defaultValue,
-      defaultChecked,
-      inputStyles = [],
-      text = '',
-      errorObject,
-    } = this.props;
+  const isError = errorObject[id];
+  const classes = type === InputType.CHECKBOX ? cls['label-checkbox'] : cls.label;
 
-    const isError = errorObject[id];
-    const classes = type === InputType.CHECKBOX ? cls['label-checkbox'] : cls.label;
+  return (
+    <div>
+      <label htmlFor={id} className={[...classNames, classes].join(' ')}>
+        {type !== InputType.CHECKBOX ? text : ''}
+        <input
+          ref={input}
+          type={type}
+          name={name}
+          defaultValue={defaultValue}
+          defaultChecked={defaultChecked}
+          id={id}
+          min={min}
+          placeholder={placeholder}
+          className={[cls.input, ...inputStyles].join(' ')}
+        />
+        {type === InputType.CHECKBOX ? text : ''}
+      </label>
+      <div className={cls.error}>{isError ?? ''}</div>
+    </div>
+  );
+};
 
-    return (
-      <div>
-        <label htmlFor={id} className={[...classNames, classes].join(' ')}>
-          {type !== InputType.CHECKBOX ? text : ''}
-          <input
-            ref={this.input}
-            type={type}
-            name={name}
-            defaultValue={defaultValue}
-            defaultChecked={defaultChecked}
-            id={id}
-            min={min}
-            placeholder={placeholder}
-            className={[cls.input, ...inputStyles].join(' ')}
-          />
-          {type === InputType.CHECKBOX ? text : ''}
-        </label>
-        <div className={cls.error}>{isError ?? ''}</div>
-      </div>
-    );
-  }
-}
+export default UncontrolledInput;
