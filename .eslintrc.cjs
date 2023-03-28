@@ -43,6 +43,13 @@ module.exports = {
     '@typescript-eslint/no-var-reqiures': 'off',
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
+    'react/function-component-definition': [
+      2,
+      {
+        namedComponents: ['function-declaration', 'function-expression', 'arrow-function'],
+        unnamedComponents: ['arrow-function'],
+      },
+    ],
     'no-alert': 'off',
   },
   settings: {
