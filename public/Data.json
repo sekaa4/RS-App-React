@@ -1,0 +1,112 @@
+[
+  {
+    "userId": 1,
+    "id": 1,
+    "name": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+    "body": "quia et suscipit suscipit recusandae consequuntur expedita et cum reprehenderit molestiae ut ut quas totam nostrum rerum est autem sunt rem eveniet architecto",
+    "birthDate": "2018-03-09",
+    "age": 5,
+    "gender": "male",
+    "breeds": "Aegean",
+    "img": "https://cdn2.thecatapi.com/images/ehc.jpg"
+  },
+  {
+    "userId": 1,
+    "id": 2,
+    "name": "qui est esse",
+    "body": "est rerum tempore vitae sequi sint nihil reprehenderit dolor beatae ea dolores neque fugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis qui aperiam non debitis possimus qui neque nisi nulla",
+    "birthDate": "2017-03-09",
+    "age": 6,
+    "gender": "female",
+    "breeds": "Asian",
+    "img": "https://cdn2.thecatapi.com/images/9ej.jpg"
+  },
+  {
+    "userId": 1,
+    "id": 3,
+    "name": "ea molestias quasi exercitationem repellat qui ipsa sit aut",
+    "body": "et iusto sed quo iure voluptatem occaecati omnis eligendi aut ad voluptatem doloribus vel accusantium quis pariatur molestiae porro eius odio et labore et velit aut",
+    "birthDate": "2019-03-09",
+    "age": 4,
+    "gender": "female",
+    "breeds": "Asian",
+    "img": "https://cdn2.thecatapi.com/images/MTUwODA5NQ.jpg"
+  },
+  {
+    "userId": 1,
+    "id": 4,
+    "name": "eum et est occaecati",
+    "body": "ullam et saepe reiciendis voluptatem adipisci sit amet autem assumenda provident rerum culpa quis hic commodi nesciunt rem tenetur doloremque ipsam iure quis sunt voluptatem rerum illo velit",
+    "birthDate": "2021-01-09",
+    "age": 2,
+    "gender": "male",
+    "breeds": "Chausie",
+    "img": "https://cdn2.thecatapi.com/images/_7U4xGLO_.jpg"
+  },
+  {
+    "userId": 1,
+    "id": 5,
+    "name": "nesciunt quas odio",
+    "body": "repudiandae veniam quaerat sunt sed alias aut fugiat sit autem sed est voluptatem omnis possimus esse voluptatibus quis est aut tenetur dolor neque",
+    "birthDate": "2019-09-24",
+    "age": 3,
+    "gender": "male",
+    "breeds": "Exotic Shorthair",
+    "img": "https://cdn2.thecatapi.com/images/1bFFj7N5c.jpg"
+  },
+  {
+    "userId": 1,
+    "id": 6,
+    "name": "dolorem eum magni eos aperiam quia",
+    "body": "ut aspernatur corporis harum nihil quis provident sequi mollitia nobis aliquid molestiae perspiciatis et ea nemo ab reprehenderit accusantium quas voluptate dolores velit et doloremque molestiae",
+    "birthDate": "2017-06-15",
+    "age": 5,
+    "gender": "female",
+    "breeds": "Manx",
+    "img": "https://cdn2.thecatapi.com/images/UYLI_E-SZ.jpg"
+  },
+  {
+    "userId": 1,
+    "id": 7,
+    "name": "magnam facilis autem",
+    "body": "dolore placeat quibusdam ea quo vitae magni quis enim qui quis quo nemo aut saepe quidem repellat excepturi ut quia sunt ut sequi eos ea sed quas",
+    "birthDate": "2020-02-20",
+    "age": 2,
+    "gender": "female",
+    "breeds": "Manx",
+    "img": "https://cdn2.thecatapi.com/images/mCbyxNhMR.jpg"
+  },
+  {
+    "userId": 1,
+    "id": 8,
+    "name": "dolorem dolore est ipsam",
+    "body": "dignissimos aperiam dolorem qui eum facilis quibusdam animi sint suscipit qui sint possimus cum quaerat magni maiores excepturi ipsam ut commodi dolor voluptatum modi aut vitae",
+    "birthDate": "2019-09-24",
+    "age": 3,
+    "gender": "female",
+    "breeds": "Exotic Shorthair",
+    "img": "https://cdn2.thecatapi.com/images/MTY0ODc2NA.jpg"
+  },
+  {
+    "userId": 1,
+    "id": 9,
+    "name": "nesciunt iure omnis dolorem tempora et accusantium",
+    "body": "consectetur animi nesciunt iure dolore enim quia ad veniam autem ut quam aut nobis et est aut quod aut provident voluptas autem voluptas",
+    "birthDate": "2021-01-09",
+    "age": 2,
+    "gender": "male",
+    "breeds": "Chausie",
+    "img": "https://cdn2.thecatapi.com/images/k1.jpg"
+  },
+  {
+    "userId": 1,
+    "id": 10,
+    "name": "optio molestias id quia eum",
+    "body": "quo et expedita modi cum officia vel magni doloribus qui repudiandae vero nisi sit quos veniam quod sed accusamus veritatis error",
+    "birthDate": "2020-01-09",
+    "age": 3,
+    "gender": "male",
+    "breeds": "Maine Coon",
+    "img": "https://cdn2.thecatapi.com/images/bsr5KQSJ6.jpg"
+  }
+]
