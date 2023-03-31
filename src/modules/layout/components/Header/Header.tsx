@@ -27,8 +27,11 @@ export default class Header extends PureComponent<WithRouterProps> {
       case Endpoints.NOT_FOUND:
         title = Constants.NOT_FOUND_PAGE;
         break;
+      case Endpoints.FORM:
+        title = Constants.FORM_PAGE;
+        break;
       default:
-        title = Constants.NOT_FOUND_PAGE;
+        title = Constants.FORM_PAGE;
         break;
     }
 
@@ -46,6 +49,11 @@ export default class Header extends PureComponent<WithRouterProps> {
               <li>
                 <NavLink to={Endpoints.ABOUT} className={isActiveLink}>
                   About
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to={Endpoints.FORM} className={isActiveLink}>
+                  Create Form
                 </NavLink>
               </li>
             </ul>

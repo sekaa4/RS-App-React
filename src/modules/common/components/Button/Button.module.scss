@@ -24,3 +24,12 @@
     cursor: default;
   }
 }
+
+.button-submit {
+  width: 100%;
+
+  &:active {
+    background: var(--color-background);
+    border-color: var(--color-background);
+  }
+}
