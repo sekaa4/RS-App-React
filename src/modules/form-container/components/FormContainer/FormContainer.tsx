@@ -194,6 +194,11 @@ const FormContainer = () => {
           Cards not found, please fill the form and create card
         </div>
       )}
+      {isSubmitSuccessful ? (
+        <div className={[cls.modal].join(' ')}>Data Save and create card</div>
+      ) : (
+        ''
+      )}
     </div>
   );
 };
