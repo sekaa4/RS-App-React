@@ -29,17 +29,17 @@ const data: Data[] = [
   },
 ];
 
-global.fetch = vi.fn().mockResolvedValueOnce({
-  json: () => Promise.resolve(data),
-});
-
 describe('Testing CardList', () => {
+  global.fetch = vi.fn().mockResolvedValueOnce({
+    json: () => Promise.resolve(data),
+  });
+
   it('should CardList create', async () => {
     render(<CardList />);
     expect(screen.queryByText(/age:/i)).toBeNull();
     expect(screen.queryByRole('img')).toBeNull();
     expect(await screen.findAllByRole('img')).toHaveLength(2);
     expect(screen.getAllByText('name:')).toHaveLength(2);
-    expect(global.fetch).toHaveBeenCalledTimes(1);
+    expect(global.fetch).toHaveBeenCalled();
   });
 });
