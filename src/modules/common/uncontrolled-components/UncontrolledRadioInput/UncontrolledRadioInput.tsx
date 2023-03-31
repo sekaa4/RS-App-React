@@ -1,41 +1,32 @@
-import CustomRefObject from 'models/CustomRefObject.type';
-import InputType from 'models/InputType';
-import { useEffect, useRef } from 'react';
+import FormInput from 'models/FormInput';
+import { InputType } from 'models/InputType';
+import { UseFormRegister } from 'react-hook-form';
+import createOptionsObjectForRegister from 'utils/createOptionsObjectForRegister';
 import cls from './UncontrolledRadioInput.module.scss';
 
 interface UncontrolledRadioInputProps {
   classNames?: string[];
   id: string;
-  refObject: React.RefObject<HTMLInputElement>[];
-  name: string;
+  propName: keyof FormInput;
   defaultValue: string;
   inputStyles?: string[];
-  errorObject: Record<keyof CustomRefObject, false | string>;
+  register: UseFormRegister<FormInput>;
 }
 const UncontrolledRadioInput = (props: UncontrolledRadioInputProps) => {
-  const {
-    classNames = '',
-    id,
-    name,
-    inputStyles = [],
-    defaultValue,
-    refObject,
-    errorObject,
-  } = props;
-  const radioInput = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    refObject.push(radioInput);
-    errorObject[name] = false;
-  }, [refObject, errorObject, name]);
+  const { classNames = '', id, propName, inputStyles = [], defaultValue, register } = props;
+  const { name, ref, onChange, onBlur } = register(propName, {
+    validate: createOptionsObjectForRegister(InputType.RADIO),
+  });
 
   return (
     <label htmlFor={id} className={[...classNames, cls['radio-label']].join(' ')}>
       {defaultValue}
       <input
-        ref={radioInput}
+        ref={ref}
         type={InputType.RADIO}
         name={name}
+        onChange={onChange}
+        onBlur={onBlur}
         id={id}
         defaultValue={defaultValue}
         className={[cls['radio-input'], ...inputStyles].join(' ')}
