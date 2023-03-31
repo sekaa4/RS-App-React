@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import CustomRefObject from 'models/CustomRefObject.type';
-import InputType from 'models/InputType';
+import { InputType } from 'models/InputType';
 
 type ValidateArr = (CustomRefObject | React.RefObject<HTMLInputElement>[])[];
 type ErrorObject = Record<keyof CustomRefObject, false | string>;

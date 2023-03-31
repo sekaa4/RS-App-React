@@ -1,14 +1,14 @@
-enum InputType {
-  TEXT = 'text',
-  DATE = 'date',
-  CHECKBOX = 'checkbox',
-  FILE = 'file',
-  RADIO = 'radio',
-  SELECT_ONE = 'select-one',
-  TEXTAREA = 'textarea',
-  NUMBER = 'number',
-  SUBMIT = 'submit',
-  BUTTON = 'button',
-}
+export const InputType = {
+  TEXT: 'text',
+  DATE: 'date',
+  CHECKBOX: 'checkbox',
+  FILE: 'file',
+  RADIO: 'radio',
+  SELECT_ONE: 'select-one',
+  TEXTAREA: 'textarea',
+  NUMBER: 'number',
+  SUBMIT: 'submit',
+  BUTTON: 'button',
+} as const;
 
-export default InputType;
+export type InputTypeOption = (typeof InputType)[keyof typeof InputType];

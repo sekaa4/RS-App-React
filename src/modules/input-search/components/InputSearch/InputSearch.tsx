@@ -1,5 +1,5 @@
 import Constants from 'models/Constants';
-import InputType from 'models/InputType';
+import { InputType } from 'models/InputType';
 import { Input } from 'modules/common';
 import { ChangeEvent, useState, useEffect, useCallback, useRef } from 'react';
 import cls from './InputSearch.module.scss';
