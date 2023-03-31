@@ -1,7 +1,13 @@
-import Data from 'models/Data.type';
-import CardList from 'modules/card-list/components/CardList/CardList';
-import { InputType } from 'models/InputType';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { useRef, useState } from 'react';
+import createDataObject from 'utils/createDataObject';
+import Data from 'models/Data.type';
+import { InputType } from 'models/InputType';
+import breeds from 'models/breeds';
+import FormInput from 'models/FormInput';
+import FormPropName from 'models/FormPropName';
+import Constants from 'models/Constants';
+import CardList from 'modules/card-list/components/CardList/CardList';
 import {
   Button,
   Form,
@@ -10,13 +16,8 @@ import {
   UncontrolledSelect,
   UncontrolledTextArea,
 } from 'modules/common/index';
-import breeds from 'models/breeds';
-import Constants from 'models/Constants';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import FormInput from 'models/FormInput';
-import FormPropName from 'models/FormPropName';
-import cls from './FormContainer.module.scss';
 import RadioContainer from '../RadioContainer/RadioContainer';
+import cls from './FormContainer.module.scss';
 
 interface FormContainerState {
   dataCard: Data[] | null;
@@ -40,50 +41,7 @@ const FormContainer = () => {
   });
   const { dataCard } = formContainerState;
 
-  const getObjWithCorrectField = (
-    acc: Data,
-    field: keyof FormInput,
-    value: FormInput[keyof FormInput]
-  ): Data => {
-    switch (field) {
-      case FormPropName.NAME_FIELD:
-        return { ...acc, name: value.toString() };
-      case FormPropName.TEXTAREA_FIELD:
-        return { ...acc, body: value.toString() };
-      case FormPropName.BIRTH_DATE_FIELD:
-        return { ...acc, birthDate: value.toString() };
-      case FormPropName.AGE_FIELD:
-        return { ...acc, age: Number(value) };
-      case FormPropName.GENDER_FIELD:
-        if (value === 'male' || value === 'female') return { ...acc, gender: value };
-        break;
-      case FormPropName.SELECT_BREEDS_FIELD:
-        return { ...acc, breeds: value.toString() };
-      case FormPropName.IMG_FIELD: {
-        if (value instanceof FileList) {
-          const fileUrl = window.URL.createObjectURL(value[0]);
-          return { ...acc, img: fileUrl };
-        }
-        break;
-      }
-      default:
-        return acc;
-    }
-    return acc;
-  };
-
-  const createDataObject = (data: FormInput, count: number): Data => {
-    const keys = Object.keys(data) as (keyof typeof data)[];
-    const dataObj = keys.reduce((acc, field) => {
-      const current = data[field];
-      return getObjWithCorrectField(acc, field, current);
-    }, {} as Data);
-
-    dataObj.id = count;
-    return dataObj;
-  };
-
-  const createCardFromForm = (dataObj: Data) => {
+  const updateStateCardFromForm = (dataObj: Data) => {
     setFormContainerState((oldState) => {
       const { dataCard: data } = oldState;
       if (data) {
@@ -96,7 +54,7 @@ const FormContainer = () => {
   const submitHandler: SubmitHandler<FormInput> = (data: FormInput) => {
     if (isValid) {
       const dataObj = createDataObject(data, submitCount);
-      createCardFromForm(dataObj);
+      updateStateCardFromForm(dataObj);
       reset();
     }
   };
