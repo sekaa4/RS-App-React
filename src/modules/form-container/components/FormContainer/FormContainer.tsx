@@ -1,7 +1,7 @@
 import Data from 'models/Data.type';
 import CardList from 'modules/card-list/components/CardList/CardList';
-import React, { useRef, useState } from 'react';
-import checkValidValue from 'utils/checkValidValue';
+import { InputType } from 'models/InputType';
+import { useRef, useState } from 'react';
 import {
   Button,
   Form,
@@ -10,68 +10,77 @@ import {
   UncontrolledSelect,
   UncontrolledTextArea,
 } from 'modules/common/index';
-import CustomRefObject from 'models/CustomRefObject.type';
 import breeds from 'models/breeds';
 import Constants from 'models/Constants';
-import InputType from 'models/InputType';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import FormInput from 'models/FormInput';
+import FormPropName from 'models/FormPropName';
 import cls from './FormContainer.module.scss';
 import RadioContainer from '../RadioContainer/RadioContainer';
 
 interface FormContainerState {
   dataCard: Data[] | null;
-  errorObject: Record<keyof CustomRefObject, false | string>;
-  countOfCards: number;
-  isValidate: boolean;
-  refObject: CustomRefObject;
-  refInputRadioObject: React.RefObject<HTMLInputElement>[];
 }
 
 const FormContainer = () => {
-  const [formContainerState, setFormContainerState] = useState<FormContainerState>({
-    dataCard: null,
-    errorObject: {},
-    countOfCards: 0,
-    isValidate: true,
-    refObject: {},
-    refInputRadioObject: [],
-  });
-
-  const { errorObject, dataCard, refInputRadioObject, refObject } = formContainerState;
-
-  const description = Constants.DESCRIPTION_FORM;
-
   const refForm = useRef<HTMLFormElement>(null);
   const refSubmit = useRef<HTMLInputElement>(null);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, submitCount, isValid, isSubmitSuccessful },
+    reset,
+  } = useForm<FormInput>({
+    mode: 'onSubmit',
+    reValidateMode: 'onSubmit',
+  });
 
-  const validate = (): void => {
-    const validateArr = [refObject, refInputRadioObject];
-    const checkValidObj = checkValidValue(validateArr, refObject, errorObject);
-    formContainerState.refObject = checkValidObj.refObject;
-    formContainerState.errorObject = checkValidObj.errorObject;
+  const [formContainerState, setFormContainerState] = useState<FormContainerState>({
+    dataCard: null,
+  });
+  const { dataCard } = formContainerState;
 
-    formContainerState.isValidate = Object.values(errorObject).every((value) => !value);
+  const getObjWithCorrectField = (
+    acc: Data,
+    field: keyof FormInput,
+    value: FormInput[keyof FormInput]
+  ): Data => {
+    switch (field) {
+      case FormPropName.NAME_FIELD:
+        return { ...acc, name: value.toString() };
+      case FormPropName.TEXTAREA_FIELD:
+        return { ...acc, body: value.toString() };
+      case FormPropName.BIRTH_DATE_FIELD:
+        return { ...acc, birthDate: value.toString() };
+      case FormPropName.AGE_FIELD:
+        return { ...acc, age: Number(value) };
+      case FormPropName.GENDER_FIELD:
+        if (value === 'male' || value === 'female') return { ...acc, gender: value };
+        break;
+      case FormPropName.SELECT_BREEDS_FIELD:
+        return { ...acc, breeds: value.toString() };
+      case FormPropName.IMG_FIELD: {
+        if (value instanceof FileList) {
+          const fileUrl = window.URL.createObjectURL(value[0]);
+          return { ...acc, img: fileUrl };
+        }
+        break;
+      }
+      default:
+        return acc;
+    }
+    return acc;
   };
 
-  const createDataObject = (): Data => {
-    formContainerState.countOfCards += 1;
-    const keys = Object.keys(refObject);
+  const createDataObject = (data: FormInput, count: number): Data => {
+    const keys = Object.keys(data) as (keyof typeof data)[];
     const dataObj = keys.reduce((acc, field) => {
-      const { current } = refObject[field];
-      if (current instanceof HTMLInputElement && current.type === 'file') {
-        const fileList = current.files as FileList;
-        const fileUrl = window.URL.createObjectURL(fileList[0]);
-        return { ...acc, [field]: fileUrl };
-      }
-      return current ? { ...acc, [field]: current.value } : acc;
+      const current = data[field];
+      return getObjWithCorrectField(acc, field, current);
     }, {} as Data);
 
-    dataObj.id = formContainerState.countOfCards;
+    dataObj.id = count;
     return dataObj;
-  };
-
-  const formReset = () => {
-    const { current } = refForm;
-    if (current) current.reset();
   };
 
   const createCardFromForm = (dataObj: Data) => {
@@ -84,97 +93,96 @@ const FormContainer = () => {
     });
   };
 
-  const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    validate();
-
-    if (formContainerState.isValidate) {
-      const dataObj = createDataObject();
+  const submitHandler: SubmitHandler<FormInput> = (data: FormInput) => {
+    if (isValid) {
+      const dataObj = createDataObject(data, submitCount);
       createCardFromForm(dataObj);
-      formReset();
-
-      setTimeout(() => alert('Data Save and create card'), 500);
-    } else {
-      setFormContainerState((oldState) => {
-        return { ...oldState, errorObject };
-      });
+      reset();
     }
   };
-
   return (
     <div className={cls['form-container']}>
-      <Form refForm={refForm} submitHandler={submitHandler} description={description}>
+      <Form
+        refForm={refForm}
+        handleSubmit={handleSubmit}
+        submitHandler={submitHandler}
+        description={Constants.DESCRIPTION_FORM}
+      >
         <div>
           <UncontrolledInput
             type={InputType.TEXT}
+            propName={FormPropName.NAME_FIELD}
             id="name"
             text="Enter the name of your cat:"
-            refObject={refObject}
             placeholder="Name of your cat"
-            errorObject={errorObject}
+            register={register}
+            errors={errors}
           />
           <UncontrolledInput
             type={InputType.DATE}
+            propName={FormPropName.BIRTH_DATE_FIELD}
             id="birthDate"
-            refObject={refObject}
-            errorObject={errorObject}
             text="Choose the birthday date of your cat:"
+            register={register}
+            errors={errors}
           />
           <UncontrolledInput
             type={InputType.NUMBER}
             id="age"
+            propName={FormPropName.AGE_FIELD}
             placeholder="Age of your cat"
-            refObject={refObject}
-            errorObject={errorObject}
             text="Enter the age of your cat(year):"
+            min="0"
+            register={register}
+            errors={errors}
           />
-          <RadioContainer errorObject={errorObject} name="gender">
+          <RadioContainer errors={errors} name="genderField">
             <UncontrolledRadioInput
               id="gender-male"
               defaultValue="male"
-              refObject={refInputRadioObject}
-              errorObject={errorObject}
-              name="gender"
+              propName={FormPropName.GENDER_FIELD}
+              register={register}
             />
             <UncontrolledRadioInput
               id="gender-female"
               defaultValue="female"
-              refObject={refInputRadioObject}
-              errorObject={errorObject}
-              name="gender"
+              propName={FormPropName.GENDER_FIELD}
+              register={register}
             />
           </RadioContainer>
         </div>
         <div>
           <UncontrolledTextArea
             id="body"
-            name="textareaForm"
-            refObject={refObject}
-            errorObject={errorObject}
+            propName={FormPropName.TEXTAREA_FIELD}
             text="Enter description of your cat:"
             placeholder="Enter description about your cat"
+            register={register}
+            errors={errors}
           />
           <UncontrolledSelect
-            refObject={refObject}
-            errorObject={errorObject}
             id="breeds"
-            name="select-breeds"
+            propName={FormPropName.SELECT_BREEDS_FIELD}
             text="Choose breeds of your cat: "
             options={breeds}
+            register={register}
+            errors={errors}
           />
           <UncontrolledInput
             type={InputType.FILE}
             id="img"
+            propName={FormPropName.IMG_FIELD}
             text="Choose your cat image:"
-            refObject={refObject}
-            errorObject={errorObject}
+            register={register}
+            errors={errors}
           />
           <UncontrolledInput
             type={InputType.CHECKBOX}
             id="personalData"
-            refObject={refObject}
-            errorObject={errorObject}
+            propName={FormPropName.PERSONAL_DATA_FIELD}
             text="I consent to my personal data"
+            register={register}
+            errors={errors}
           />
           <Button refSubmit={refSubmit} text="Create Card" />
         </div>
