@@ -20,6 +20,7 @@ const Home = () => {
   const refSearchValue = useRef<string>(localStorage.getItem('key') ?? '');
 
   const handleClick = () => {
+    if (searchSubmit === refSearchValue.current) return;
     setSearchSubmit(refSearchValue.current);
     setLoading(true);
   };
@@ -45,7 +46,7 @@ const Home = () => {
     <div className={cls.home}>
       <h2>Home Page</h2>
       <div className={cls['home__search-bar']}>
-        <InputSearch refSearchValue={refSearchValue} />
+        <InputSearch refSearchValue={refSearchValue} handleKeyDown={handleClick} />
         <Button text="search" handleClick={handleClick} />
       </div>
       {isLoading ? <div>Loading...</div> : <CardList data={cardListState.data} />}

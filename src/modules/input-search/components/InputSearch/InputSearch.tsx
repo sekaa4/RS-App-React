@@ -7,10 +7,11 @@ import cls from './InputSearch.module.scss';
 interface InputSearchProps {
   classNames?: string[];
   refSearchValue: React.MutableRefObject<string>;
+  handleKeyDown?: () => void;
 }
 
 const InputSearch = (props: InputSearchProps) => {
-  const { classNames = [], refSearchValue } = props;
+  const { classNames = [], refSearchValue, handleKeyDown } = props;
   const styles = [cls['search-bar'], ...classNames];
   const inputStyles = [cls['input-search']];
 
@@ -27,6 +28,12 @@ const InputSearch = (props: InputSearchProps) => {
     localStorage.setItem(Constants.SEARCH_KEY, refSearchValue.current);
   }, [refSearchValue]);
 
+  const handleKeywordKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter' && handleKeyDown) {
+      handleKeyDown();
+    }
+  };
+
   useEffect(() => {
     refSearchValue.current = searchLine;
   }, [searchLine, refSearchValue]);
@@ -41,13 +48,14 @@ const InputSearch = (props: InputSearchProps) => {
 
   return (
     <Input
+      id="search-bar"
       type={InputType.TEXT}
       handleChange={handleChange}
       value={searchLine}
-      id="search-bar"
       placeholder="Search bar..."
       classNames={styles}
       inputStyles={inputStyles}
+      handleKeyDown={handleKeywordKeyPress}
     />
   );
 };
