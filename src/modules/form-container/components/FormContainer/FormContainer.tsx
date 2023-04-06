@@ -146,7 +146,7 @@ const FormContainer = () => {
         </div>
       </Form>
       {dataCard ? (
-        <CardList data={dataCard} />
+        <CardList data={dataCard} form />
       ) : (
         <div className={cls['not-found']}>
           Cards not found, please fill the form and create card
