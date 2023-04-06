@@ -14,18 +14,19 @@ beforeEach(() => {
 });
 
 describe('Testing Input', () => {
+  const refSearchValue = { current: '' };
   it('should change value Input', async () => {
-    render(<InputSearch />);
+    render(<InputSearch refSearchValue={refSearchValue} />);
     expect(screen.getByRole('textbox')).toHaveDisplayValue('');
     await userEvent.type(screen.getByRole('textbox'), 'React');
     expect(screen.getByRole('textbox')).toHaveDisplayValue('React');
   });
 
   it('should save in LocalStorage', async () => {
-    const { unmount } = render(<InputSearch />);
+    const { unmount } = render(<InputSearch refSearchValue={refSearchValue} />);
     await userEvent.type(screen.getByRole('textbox'), 'React');
     unmount();
     expect(screen.queryByRole('textbox')).toBeFalsy();
-    expect(Object.hasOwn(mockLocalStorage, 'key')).toBeTruthy();
+    expect(Object.hasOwn(mockLocalStorage, 'key')).not.toBeTruthy();
   });
 });

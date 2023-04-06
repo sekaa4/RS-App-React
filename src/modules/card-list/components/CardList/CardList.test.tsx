@@ -35,11 +35,10 @@ describe('Testing CardList', () => {
   });
 
   it('should CardList create', async () => {
-    render(<CardList />);
+    render(<CardList data={data} />);
     expect(screen.queryByText(/age:/i)).toBeNull();
-    expect(screen.queryByRole('img')).toBeNull();
     expect(await screen.findAllByRole('img')).toHaveLength(2);
     expect(screen.getAllByText('name:')).toHaveLength(2);
-    expect(global.fetch).toHaveBeenCalled();
+    expect(global.fetch).not.toHaveBeenCalled();
   });
 });

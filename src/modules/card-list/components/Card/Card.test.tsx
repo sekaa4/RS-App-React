@@ -18,7 +18,7 @@ describe('Testing Card', () => {
       img: 'https://cdn2.thecatapi.com/images/ehc.jpg',
     };
 
-    render(<Card data={mockData} />);
+    render(<Card data={mockData} form />);
     expect(screen.getByText(/Aegean/)).toBeInTheDocument();
     expect(screen.getByText(/age:/)).toBeInTheDocument();
     expect(screen.getByRole('img')).toBeInTheDocument();
