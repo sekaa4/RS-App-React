@@ -1,0 +1,33 @@
+@import '../../../../assets/styles/abstract/mixins';
+
+.container {
+  display: flex;
+  background-color: var(--color-header-background);
+  @include font($size: 1.8rem, $height: 2.6rem, $weight: normal);
+  width: 100%;
+  padding: 0.5rem;
+}
+
+.item {
+  text-align: center;
+  vertical-align: middle;
+  height: 3rem;
+  margin: 0 auto;
+  line-height: 3rem;
+  font-family: cursive;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  max-width: var(--content-width);
+  width: 100%;
+  margin: 0 auto;
+}
+
+.img {
+  display: block;
+  height: 3rem;
+  object-fit: cover;
+  margin: 0 auto;
+}

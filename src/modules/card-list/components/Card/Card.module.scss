@@ -1,0 +1,29 @@
+.card {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s;
+  width: auto;
+
+  border-radius: 5px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+  background-color: var(--color-card-background);
+
+  &:hover {
+    scale: 1.05;
+  }
+}
+
+.image {
+  height: 24rem;
+  width: 100%;
+  border-radius: 5px;
+  object-fit: fill;
+}
+
+.description {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.8rem;
+  padding: 1rem;
+}
