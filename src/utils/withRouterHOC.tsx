@@ -1,5 +1,4 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 export interface WithRouterProps {
@@ -11,7 +10,7 @@ export interface WithRouterProps {
 export const withRouter = <Props extends WithRouterProps>(
   Component: React.ComponentType<Props>
 ) => {
-  return function ComponentWithRouterProp(props: Omit<Props, keyof WithRouterProps>) {
+  return (props: Omit<Props, keyof WithRouterProps>) => {
     const location = useLocation();
     const params = useParams();
     const navigate = useNavigate();

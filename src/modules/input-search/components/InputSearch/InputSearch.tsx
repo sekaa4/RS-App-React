@@ -1,7 +1,7 @@
 import Constants from 'models/Constants';
-import InputType from 'models/InputType';
+import { InputType } from 'models/InputType';
 import { Input } from 'modules/common';
-import { Component, ChangeEvent } from 'react';
+import { ChangeEvent, useState, useEffect, useCallback, useRef } from 'react';
 import cls from './InputSearch.module.scss';
 
 interface InputSearchState {
@@ -11,60 +11,55 @@ interface InputSearchState {
 interface InputSearchProps {
   classNames?: string[];
 }
-export default class InputSearch extends Component<InputSearchProps, InputSearchState> {
-  constructor(props: InputSearchProps) {
-    super(props);
-    this.state = {
-      value: localStorage.getItem(Constants.SEARCH_KEY) ?? '',
-    };
 
-    this.handleChange = this.handleChange.bind(this);
-    this.onUnload = this.onUnload.bind(this);
-  }
+const InputSearch = (props: InputSearchProps) => {
+  const { classNames = [] } = props;
+  const styles = [cls['search-bar'], ...classNames];
+  const inputStyles = [cls['input-search']];
+  const initialState = {
+    value: localStorage.getItem(Constants.SEARCH_KEY) ?? '',
+  };
 
-  componentDidMount() {
-    window.addEventListener(Constants.BEFOREUNLOAD, this.onUnload);
-  }
+  const [inputValue, setInputValue] = useState<InputSearchState>(initialState);
+  const refValue = useRef<string>(inputValue.value);
 
-  componentWillUnmount() {
-    const { value } = this.state;
-    localStorage.setItem(Constants.SEARCH_KEY, value);
-
-    window.removeEventListener(Constants.BEFOREUNLOAD, this.onUnload);
-  }
-
-  handleChange(event: ChangeEvent<HTMLInputElement>) {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const {
       target: { value },
     } = event;
-    this.setState(() => {
-      return {
-        value,
-      };
+
+    setInputValue((oldState) => {
+      return { ...oldState, value };
     });
-  }
+  };
 
-  onUnload() {
-    const { value } = this.state;
-    localStorage.setItem(Constants.SEARCH_KEY, value);
-  }
+  const onUnload = useCallback(() => {
+    localStorage.setItem(Constants.SEARCH_KEY, refValue.current);
+  }, []);
 
-  render() {
-    const { value } = this.state;
-    const { classNames = [] } = this.props;
-    const styles = [cls['search-bar'], ...classNames];
-    const inputStyles = [cls['input-search']];
+  useEffect(() => {
+    refValue.current = inputValue.value;
+  }, [inputValue]);
 
-    return (
-      <Input
-        type={InputType.TEXT}
-        handleChange={this.handleChange}
-        value={value}
-        id="search-bar"
-        placeholder="Search bar..."
-        classNames={styles}
-        inputStyles={inputStyles}
-      />
-    );
-  }
-}
+  useEffect(() => {
+    window.addEventListener(Constants.BEFOREUNLOAD, onUnload);
+    return () => {
+      localStorage.setItem(Constants.SEARCH_KEY, refValue.current);
+      window.removeEventListener(Constants.BEFOREUNLOAD, onUnload);
+    };
+  }, [onUnload]);
+
+  return (
+    <Input
+      type={InputType.TEXT}
+      handleChange={handleChange}
+      value={inputValue.value}
+      id="search-bar"
+      placeholder="Search bar..."
+      classNames={styles}
+      inputStyles={inputStyles}
+    />
+  );
+};
+
+export default InputSearch;

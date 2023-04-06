@@ -1,7 +1,13 @@
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { useRef, useState } from 'react';
+import createDataObject from 'utils/createDataObject';
 import Data from 'models/Data.type';
+import { InputType } from 'models/InputType';
+import breeds from 'models/breeds';
+import FormInput from 'models/FormInput';
+import FormPropName from 'models/FormPropName';
+import Constants from 'models/Constants';
 import CardList from 'modules/card-list/components/CardList/CardList';
-import React, { Component, createRef } from 'react';
-import checkValidValue from 'utils/checkValidValue';
 import {
   Button,
   Form,
@@ -10,204 +16,149 @@ import {
   UncontrolledSelect,
   UncontrolledTextArea,
 } from 'modules/common/index';
-import CustomRefObject from 'models/CustomRefObject.type';
-import breeds from 'models/breeds';
-import Constants from 'models/Constants';
-import InputType from 'models/InputType';
-import cls from './FormContainer.module.scss';
 import RadioContainer from '../RadioContainer/RadioContainer';
+import cls from './FormContainer.module.scss';
 
 interface FormContainerState {
   dataCard: Data[] | null;
-  errorObject: Record<keyof CustomRefObject, false | string>;
 }
 
-export default class FormContainer extends Component<Record<string, unknown>, FormContainerState> {
-  refObject: CustomRefObject;
+const FormContainer = () => {
+  const refForm = useRef<HTMLFormElement>(null);
+  const refSubmit = useRef<HTMLInputElement>(null);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, submitCount, isValid, isSubmitSuccessful },
+    reset,
+  } = useForm<FormInput>({
+    mode: 'onSubmit',
+    reValidateMode: 'onSubmit',
+  });
 
-  refInputRadioObject: React.RefObject<HTMLInputElement>[];
+  const [formContainerState, setFormContainerState] = useState<FormContainerState>({
+    dataCard: null,
+  });
+  const { dataCard } = formContainerState;
 
-  refSubmit: React.RefObject<HTMLInputElement | HTMLButtonElement>;
-
-  refForm: React.RefObject<HTMLFormElement>;
-
-  errorObject: Record<keyof CustomRefObject, false | string>;
-
-  isValidate: boolean;
-
-  description: string;
-
-  countOfCards: number;
-
-  constructor(props: Record<string, unknown>) {
-    super(props);
-    this.state = {
-      dataCard: null,
-      errorObject: {},
-    };
-
-    const { errorObject } = this.state;
-    this.refObject = {};
-    this.refInputRadioObject = [];
-    this.countOfCards = 0;
-    this.errorObject = errorObject;
-    this.isValidate = true;
-    this.description = Constants.DESCRIPTION_FORM;
-
-    this.refForm = createRef<HTMLFormElement>();
-    this.refSubmit = createRef<HTMLInputElement>();
-    this.createCardFromForm = this.createCardFromForm.bind(this);
-    this.submitHandler = this.submitHandler.bind(this);
-  }
-
-  createCardFromForm(dataObj: Data) {
-    this.setState((oldState) => {
-      const { dataCard } = oldState;
-      if (dataCard) {
-        return { dataCard: [...dataCard, dataObj] };
+  const updateStateCardFromForm = (dataObj: Data) => {
+    setFormContainerState((oldState) => {
+      const { dataCard: data } = oldState;
+      if (data) {
+        return { ...oldState, dataCard: [...data, dataObj] };
       }
-      return { dataCard: [dataObj] };
+      return { ...oldState, dataCard: [dataObj] };
     });
-  }
+  };
 
-  submitHandler(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    this.validate();
-    if (this.isValidate) {
-      const dataObj = this.createDataObject();
-      this.createCardFromForm(dataObj);
-      this.formReset();
-
-      setTimeout(() => alert('Data Save and create card'), 500);
-    } else {
-      this.setState({ errorObject: this.errorObject });
+  const submitHandler: SubmitHandler<FormInput> = (data: FormInput) => {
+    if (isValid) {
+      const dataObj = createDataObject(data, submitCount);
+      updateStateCardFromForm(dataObj);
+      reset();
     }
-  }
-
-  createDataObject(): Data {
-    this.countOfCards += 1;
-    const keys = Object.keys(this.refObject);
-    const dataObj = keys.reduce((acc, field) => {
-      const { current } = this.refObject[field];
-      if (current instanceof HTMLInputElement && current.type === 'file') {
-        const fileList = current.files as FileList;
-        const fileUrl = window.URL.createObjectURL(fileList[0]);
-        return { ...acc, [field]: fileUrl };
-      }
-      return current ? { ...acc, [field]: current.value } : acc;
-    }, {} as Data);
-
-    dataObj.id = this.countOfCards;
-    return dataObj;
-  }
-
-  validate(): void {
-    const validateArr = [this.refObject, this.refInputRadioObject];
-    const checkValidObj = checkValidValue(validateArr, this.refObject, this.errorObject);
-    this.refObject = checkValidObj.refObject;
-    this.errorObject = checkValidObj.errorObject;
-
-    this.isValidate = Object.values(this.errorObject).every((value) => !value);
-  }
-
-  formReset() {
-    const { current } = this.refForm;
-    if (current) current.reset();
-  }
-
-  render() {
-    const { dataCard } = this.state;
-
-    return (
-      <div className={cls['form-container']}>
-        <Form
-          refForm={this.refForm}
-          submitHandler={this.submitHandler}
-          description={this.description}
-        >
-          <div>
-            <UncontrolledInput
-              type={InputType.TEXT}
-              id="name"
-              text="Enter the name of your cat:"
-              refObject={this.refObject}
-              placeholder="Name of your cat"
-              errorObject={this.errorObject}
+  };
+  return (
+    <div className={cls['form-container']}>
+      <Form
+        refForm={refForm}
+        handleSubmit={handleSubmit}
+        submitHandler={submitHandler}
+        description={Constants.DESCRIPTION_FORM}
+      >
+        <div>
+          <UncontrolledInput
+            type={InputType.TEXT}
+            propName={FormPropName.NAME_FIELD}
+            id="name"
+            text="Enter the name of your cat:"
+            placeholder="Name of your cat"
+            register={register}
+            errors={errors}
+          />
+          <UncontrolledInput
+            type={InputType.DATE}
+            propName={FormPropName.BIRTH_DATE_FIELD}
+            id="birthDate"
+            text="Choose the birthday date of your cat:"
+            register={register}
+            errors={errors}
+          />
+          <UncontrolledInput
+            type={InputType.NUMBER}
+            id="age"
+            propName={FormPropName.AGE_FIELD}
+            placeholder="Age of your cat"
+            text="Enter the age of your cat(year):"
+            min="0"
+            register={register}
+            errors={errors}
+          />
+          <RadioContainer errors={errors} name="genderField">
+            <UncontrolledRadioInput
+              id="gender-male"
+              defaultValue="male"
+              propName={FormPropName.GENDER_FIELD}
+              register={register}
             />
-            <UncontrolledInput
-              type={InputType.DATE}
-              id="birthDate"
-              refObject={this.refObject}
-              errorObject={this.errorObject}
-              text="Choose the birthday date of your cat:"
+            <UncontrolledRadioInput
+              id="gender-female"
+              defaultValue="female"
+              propName={FormPropName.GENDER_FIELD}
+              register={register}
             />
-            <UncontrolledInput
-              type={InputType.NUMBER}
-              id="age"
-              placeholder="Age of your cat"
-              refObject={this.refObject}
-              errorObject={this.errorObject}
-              text="Enter the age of your cat(year):"
-            />
-            <RadioContainer errorObject={this.errorObject} name="gender">
-              <UncontrolledRadioInput
-                id="gender-male"
-                defaultValue="male"
-                refObject={this.refInputRadioObject}
-                errorObject={this.errorObject}
-                name="gender"
-              />
-              <UncontrolledRadioInput
-                id="gender-female"
-                defaultValue="female"
-                refObject={this.refInputRadioObject}
-                errorObject={this.errorObject}
-                name="gender"
-              />
-            </RadioContainer>
-          </div>
-          <div>
-            <UncontrolledTextArea
-              id="body"
-              name="textareaForm"
-              refObject={this.refObject}
-              errorObject={this.errorObject}
-              text="Enter description of your cat:"
-              placeholder="Enter description about your cat"
-            />
-            <UncontrolledSelect
-              refObject={this.refObject}
-              errorObject={this.errorObject}
-              id="breeds"
-              name="select-breeds"
-              text="Choose breeds of your cat: "
-              options={breeds}
-            />
-            <UncontrolledInput
-              type={InputType.FILE}
-              id="img"
-              text="Choose your cat image:"
-              refObject={this.refObject}
-              errorObject={this.errorObject}
-            />
-            <UncontrolledInput
-              type={InputType.CHECKBOX}
-              id="personalData"
-              refObject={this.refObject}
-              errorObject={this.errorObject}
-              text="I consent to my personal data"
-            />
-            <Button refSubmit={this.refSubmit} text="Create Card" />
-          </div>
-        </Form>
-        {dataCard ? (
-          <CardList data={dataCard} />
-        ) : (
-          <div className={cls['not-found']}>
-            Cards not found, please fill the form and create card
-          </div>
-        )}
-      </div>
-    );
-  }
-}
+          </RadioContainer>
+        </div>
+        <div>
+          <UncontrolledTextArea
+            id="body"
+            propName={FormPropName.TEXTAREA_FIELD}
+            text="Enter description of your cat:"
+            placeholder="Enter description about your cat"
+            register={register}
+            errors={errors}
+          />
+          <UncontrolledSelect
+            id="breeds"
+            propName={FormPropName.SELECT_BREEDS_FIELD}
+            text="Choose breeds of your cat: "
+            options={breeds}
+            register={register}
+            errors={errors}
+          />
+          <UncontrolledInput
+            type={InputType.FILE}
+            id="img"
+            propName={FormPropName.IMG_FIELD}
+            text="Choose your cat image:"
+            register={register}
+            errors={errors}
+          />
+          <UncontrolledInput
+            type={InputType.CHECKBOX}
+            id="personalData"
+            propName={FormPropName.PERSONAL_DATA_FIELD}
+            text="I consent to my personal data"
+            register={register}
+            errors={errors}
+          />
+          <Button refSubmit={refSubmit} text="Create Card" />
+        </div>
+      </Form>
+      {dataCard ? (
+        <CardList data={dataCard} />
+      ) : (
+        <div className={cls['not-found']}>
+          Cards not found, please fill the form and create card
+        </div>
+      )}
+      {isSubmitSuccessful ? (
+        <div className={[cls.modal].join(' ')}>Data Save and create card</div>
+      ) : (
+        ''
+      )}
+    </div>
+  );
+};
+
+export default FormContainer;

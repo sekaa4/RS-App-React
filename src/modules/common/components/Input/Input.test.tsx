@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import InputType from 'models/InputType';
+import { InputType } from 'models/InputType';
 import Input from './Input';
 
 describe('Testing Input component', () => {

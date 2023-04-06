@@ -1,44 +1,38 @@
-import CustomRefObject from 'models/CustomRefObject.type';
-import InputType from 'models/InputType';
-import { Component, createRef } from 'react';
+import FormInput from 'models/FormInput';
+import { InputType } from 'models/InputType';
+import { UseFormRegister } from 'react-hook-form';
+import createOptionsObjectForRegister from 'utils/createOptionsObjectForRegister';
 import cls from './UncontrolledRadioInput.module.scss';
 
 interface UncontrolledRadioInputProps {
   classNames?: string[];
   id: string;
-  refObject: React.RefObject<HTMLInputElement>[];
-  name: string;
+  propName: keyof FormInput;
   defaultValue: string;
   inputStyles?: string[];
-  errorObject: Record<keyof CustomRefObject, false | string>;
+  register: UseFormRegister<FormInput>;
 }
-export default class UncontrolledRadioInput extends Component<UncontrolledRadioInputProps> {
-  radioInput: React.RefObject<HTMLInputElement>;
+const UncontrolledRadioInput = (props: UncontrolledRadioInputProps) => {
+  const { classNames = '', id, propName, inputStyles = [], defaultValue, register } = props;
+  const { name, ref, onChange, onBlur } = register(propName, {
+    validate: createOptionsObjectForRegister(InputType.RADIO),
+  });
 
-  constructor(props: UncontrolledRadioInputProps) {
-    super(props);
-    const { refObject, errorObject, name } = this.props;
-    this.radioInput = createRef<HTMLInputElement>();
+  return (
+    <label htmlFor={id} className={[...classNames, cls['radio-label']].join(' ')}>
+      {defaultValue}
+      <input
+        ref={ref}
+        type={InputType.RADIO}
+        name={name}
+        onChange={onChange}
+        onBlur={onBlur}
+        id={id}
+        defaultValue={defaultValue}
+        className={[cls['radio-input'], ...inputStyles].join(' ')}
+      />
+    </label>
+  );
+};
 
-    refObject.push(this.radioInput);
-    errorObject[name] = false;
-  }
-
-  render() {
-    const { classNames = '', id, name, inputStyles = [], defaultValue } = this.props;
-
-    return (
-      <label htmlFor={id} className={[...classNames, cls['radio-label']].join(' ')}>
-        {defaultValue}
-        <input
-          ref={this.radioInput}
-          type={InputType.RADIO}
-          name={name}
-          id={id}
-          defaultValue={defaultValue}
-          className={[cls['radio-input'], ...inputStyles].join(' ')}
-        />
-      </label>
-    );
-  }
-}
+export default UncontrolledRadioInput;
