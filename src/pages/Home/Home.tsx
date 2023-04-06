@@ -22,6 +22,7 @@ const Home = () => {
   const handleClick = () => {
     if (searchSubmit === refSearchValue.current) return;
     setSearchSubmit(refSearchValue.current);
+    localStorage.setItem(Constants.SEARCH_KEY, refSearchValue.current);
     setLoading(true);
   };
 

@@ -41,7 +41,6 @@ const InputSearch = (props: InputSearchProps) => {
   useEffect(() => {
     window.addEventListener(Constants.BEFOREUNLOAD, onUnload);
     return () => {
-      localStorage.setItem(Constants.SEARCH_KEY, refSearchValue.current);
       window.removeEventListener(Constants.BEFOREUNLOAD, onUnload);
     };
   }, [onUnload, refSearchValue]);
