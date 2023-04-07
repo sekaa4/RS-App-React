@@ -1,6 +1,3 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/aria-role */
 import type Data from 'models/Data.type';
 import { useContextHome } from 'pages/Home/ContextHome';
 import cls from './Card.module.scss';
@@ -18,7 +15,7 @@ const Card = (props: CardProps) => {
   const { handleClickCardModal } = useContextHome();
   if (form) {
     return (
-      <div role="modal" className={cls.card} onClick={() => handleClickCardModal(id)}>
+      <div className={cls.card} onClick={() => handleClickCardModal(id)}>
         <img src={img} alt="cat" className={cls.image} />
         <div className={cls.description}>
           <span>
@@ -44,7 +41,7 @@ const Card = (props: CardProps) => {
     );
   }
   return (
-    <div role="modal" className={cls.card} onClick={() => handleClickCardModal(id)}>
+    <div className={cls.card} onClick={() => handleClickCardModal(id)}>
       <img src={img} alt="cat" className={cls.image} />
       <div className={cls.description}>
         <span>

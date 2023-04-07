@@ -24,7 +24,7 @@
 .loader {
   margin: 0 auto;
   top: 50%;
-  color: #000000;
+  color: var(--overlay-color);
   font-size: 45px;
   text-indent: -9999em;
   overflow: hidden;
