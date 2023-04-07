@@ -1,10 +1,8 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/aria-role */
 import Data from 'models/Data.type';
 import URLConstants from 'models/URLConstants';
 import { ModalState, useContextHome } from 'pages/Home/ContextHome';
 import { useEffect, useState } from 'react';
+import Portal from 'utils/Portal';
 
 import cls from './Modal.module.scss';
 
@@ -39,50 +37,57 @@ const Modal = (props: ModalData) => {
       }
     };
     if (id && isLoading) getData(id);
-    return () => {
-      // if (isLoading) abortController.abort();
-    };
   }, [id, isLoading]);
-
   return (
-    <div className={cls.modal} onClick={handleClickCloseCardModal}>
+    <Portal>
       <div
-        className={cls['modal-window']}
-        onClick={(event) => {
-          event.stopPropagation();
-        }}
+        className={isLoading ? [cls.modal, cls.opened].join(' ') : cls.modal}
+        onClick={handleClickCloseCardModal}
       >
-        <button type="button" className={cls['close-modal']} onClick={handleClickCloseCardModal}>
-          ✖
-        </button>
-        {modalCard && !isLoading && (
-          <div>
-            <img src={modalCard.img} alt="cat" className={cls.image} />
-            <div className={cls.description}>
-              <span>
-                <b>name:</b> {modalCard.name}
-              </span>
-              <span>
-                <b>description:</b> {modalCard.body}
-              </span>
-              <span>
-                <b>age:</b> {modalCard.age}
-              </span>
-              <span>
-                <b>birth date:</b> {modalCard.birthDate}
-              </span>
-              <span>
-                <b>gender:</b> {modalCard.gender}
-              </span>
-              <span>
-                <b>breeds:</b> {modalCard.breeds}
-              </span>
-            </div>
+        <div className={cls.overlay}>
+          <div
+            className={cls['modal-window']}
+            onClick={(event) => {
+              event.stopPropagation();
+            }}
+          >
+            <button
+              type="button"
+              className={cls['close-modal']}
+              onClick={handleClickCloseCardModal}
+            >
+              ✖
+            </button>
+            {modalCard && !isLoading && (
+              <div>
+                <img src={modalCard.img} alt="cat" className={cls.image} />
+                <div className={cls.description}>
+                  <span>
+                    <b>name:</b> {modalCard.name}
+                  </span>
+                  <span>
+                    <b>description:</b> {modalCard.body}
+                  </span>
+                  <span>
+                    <b>age:</b> {modalCard.age}
+                  </span>
+                  <span>
+                    <b>birth date:</b> {modalCard.birthDate}
+                  </span>
+                  <span>
+                    <b>gender:</b> {modalCard.gender}
+                  </span>
+                  <span>
+                    <b>breeds:</b> {modalCard.breeds}
+                  </span>
+                </div>
+              </div>
+            )}
+            {isLoading ? <div className={cls.loader}>Loading...</div> : false}
           </div>
-        )}
-        {isLoading ? <div className={cls.loader}>Loading...</div> : false}
+        </div>
       </div>
-    </div>
+    </Portal>
   );
 };
 
