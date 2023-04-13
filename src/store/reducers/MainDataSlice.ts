@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import Data from 'models/Data.type';
+import fetchMainData from './ActionCreators';
 
 interface MainDataState {
   mainData: Data[];
@@ -17,17 +18,35 @@ export const mainDataSlice = createSlice({
   name: 'mainData',
   initialState,
   reducers: {
-    mainDataFetching(state) {
+    // mainDataFetching(state) {
+    //   const curState = state;
+    //   curState.isLoading = true;
+    // },
+    // mainDataSuccess(state, action: PayloadAction<Data[]>) {
+    //   const curState = state;
+    //   curState.mainData = action.payload;
+    //   curState.error = '';
+    //   curState.isLoading = false;
+    // },
+    // mainDataError(state, action: PayloadAction<string>) {
+    //   const curState = state;
+    //   curState.mainData = [];
+    //   curState.error = action.payload;
+    //   curState.isLoading = false;
+    // },
+  },
+  extraReducers: {
+    [fetchMainData.pending.type](state) {
       const curState = state;
       curState.isLoading = true;
     },
-    mainDataSuccess(state, action: PayloadAction<Data[]>) {
+    [fetchMainData.fulfilled.type](state, action: PayloadAction<Data[]>) {
       const curState = state;
       curState.mainData = action.payload;
       curState.error = '';
       curState.isLoading = false;
     },
-    mainDataError(state, action: PayloadAction<string>) {
+    [fetchMainData.rejected.type](state, action: PayloadAction<string>) {
       const curState = state;
       curState.mainData = [];
       curState.error = action.payload;

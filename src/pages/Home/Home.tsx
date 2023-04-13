@@ -10,7 +10,6 @@ import cls from './Home.module.scss';
 import { ModalState, ContextHome } from './ContextHome';
 
 const Home = () => {
-  // const [isLoading, setLoading] = useState<boolean>(true);
   const [modalData, setModalCard] = useState<ModalState>({
     isModal: false,
     isLoading: false,
@@ -21,7 +20,7 @@ const Home = () => {
   const { isModal } = modalData;
 
   const dispatch = useAppDispatch();
-  const { mainData, isLoading } = useAppSelector((state) => state.mainDataReducer);
+  const { mainData, isLoading, error } = useAppSelector((state) => state.mainDataReducer);
   const { value } = useAppSelector((state) => state.searchLineReducer);
 
   const handleClick = () => {
@@ -76,6 +75,7 @@ const Home = () => {
   useEffect(() => {
     dispatch(fetchMainData(value));
   }, [dispatch, value]);
+
   return (
     <ContextHome.Provider value={initialContextValue}>
       <div className={cls.home}>
@@ -84,7 +84,8 @@ const Home = () => {
           <InputSearch refSearchValue={refSearchValue} handleKeyDown={handleClick} />
           <Button text="search" handleClick={handleClick} />
         </div>
-        {isLoading ? <div className={cls.loader}>Loading...</div> : <CardList data={mainData} />}
+        {isLoading && <div className={cls.loader}>Loading...</div>}
+        {(error && <div>{error}</div>) || (mainData && <CardList data={mainData} />)}
       </div>
       {isModal && <Modal modalData={modalData} />}
     </ContextHome.Provider>
