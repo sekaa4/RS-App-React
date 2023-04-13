@@ -25,7 +25,7 @@ const Modal = (props: ModalData) => {
         const res = await fetch(`${URLConstants.BASE_URL}?id=${idData}`, {
           signal: abortController.signal,
         });
-        const newData = await res.json();
+        const newData: Data[] = await res.json();
         setModalCard({ ...newData[0] });
       } catch (err) {
         if (err instanceof Error) {

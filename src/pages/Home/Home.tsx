@@ -2,16 +2,15 @@ import CardList from 'modules/card-list/components/CardList/CardList';
 import InputSearch from 'modules/input-search/components/InputSearch/InputSearch';
 import { Button } from 'modules/common';
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import URLConstants from 'models/URLConstants';
 import Modal from 'modules/modal/components/Modal/Modal';
 import { useAppDispatch, useAppSelector } from 'redux/redux';
-import { mainDataSlice } from 'store/reducers/MainDataSlice';
 import { searchStringSlice } from 'store/reducers/SearchStringSlice';
+import fetchMainData from 'store/reducers/ActionCreators';
 import cls from './Home.module.scss';
 import { ModalState, ContextHome } from './ContextHome';
 
 const Home = () => {
-  const [isLoading, setLoading] = useState<boolean>(true);
+  // const [isLoading, setLoading] = useState<boolean>(true);
   const [modalData, setModalCard] = useState<ModalState>({
     isModal: false,
     isLoading: false,
@@ -22,13 +21,12 @@ const Home = () => {
   const { isModal } = modalData;
 
   const dispatch = useAppDispatch();
-  const { mainData } = useAppSelector((state) => state.mainDataReducer);
+  const { mainData, isLoading } = useAppSelector((state) => state.mainDataReducer);
   const { value } = useAppSelector((state) => state.searchLineReducer);
 
   const handleClick = () => {
     if (value === refSearchValue.current) return;
     dispatch(searchStringSlice.actions.writeSearchLine(refSearchValue.current));
-    setLoading(true);
   };
 
   const handleClickCardModal = useCallback((id: number) => {
@@ -58,23 +56,26 @@ const Home = () => {
     [handleClickCardModal, handleClickCloseCardModal, modalData]
   );
 
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const res = await fetch(`${URLConstants.BASE_URL}?q=${value}`);
-        const newData = await res.json();
-        dispatch(mainDataSlice.actions.writeMainData(newData));
-      } catch (err) {
-        if (err instanceof Error) {
-          throw new Error(err.message);
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-    getData();
-  }, [dispatch, value]);
+  // useEffect(() => {
+  //   const getData = async () => {
+  //     try {
+  //       const res = await fetch(`${URLConstants.BASE_URL}?q=${value}`);
+  //       const newData = await res.json();
+  //       dispatch(mainDataSlice.actions.writeMainData(newData));
+  //     } catch (err) {
+  //       if (err instanceof Error) {
+  //         throw new Error(err.message);
+  //       }
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   getData();
+  // }, [dispatch, value]);
 
+  useEffect(() => {
+    dispatch(fetchMainData(value));
+  }, [dispatch, value]);
   return (
     <ContextHome.Provider value={initialContextValue}>
       <div className={cls.home}>
