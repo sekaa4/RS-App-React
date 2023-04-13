@@ -1,8 +1,9 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import mainDataReducer from './reducers/MainDataSlice';
 import searchLineReducer from './reducers/SearchStringSlice';
+import formDataReducer from './reducers/FormDataSlice';
 
-const rootReducer = combineReducers({ mainDataReducer, searchLineReducer });
+const rootReducer = combineReducers({ mainDataReducer, searchLineReducer, formDataReducer });
 
 export const setupStore = () => {
   return configureStore({
