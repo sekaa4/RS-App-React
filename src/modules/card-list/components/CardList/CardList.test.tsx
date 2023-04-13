@@ -6,7 +6,6 @@ import CardList from './CardList';
 
 const data: Data[] = [
   {
-    userId: 1,
     id: 1,
     name: 'sunt aut facere repellat provident occaecati excepturi optio reprehenderit',
     body: 'quia et suscipit suscipit recusandae consequuntur expedita et cum reprehenderit molestiae ut ut quas totam nostrum rerum est autem sunt rem eveniet architecto',
@@ -17,7 +16,6 @@ const data: Data[] = [
     img: 'https://cdn2.thecatapi.com/images/ehc.jpg',
   },
   {
-    userId: 2,
     id: 2,
     name: 'sunt aut facere repellat provident occaecati excepturi optio reprehenderit',
     body: 'quia et suscipit suscipit recusandae consequuntur expedita et cum reprehenderit molestiae ut ut quas totam nostrum rerum est autem sunt rem eveniet architecto',
@@ -35,11 +33,10 @@ describe('Testing CardList', () => {
   });
 
   it('should CardList create', async () => {
-    render(<CardList />);
+    render(<CardList data={data} />);
     expect(screen.queryByText(/age:/i)).toBeNull();
-    expect(screen.queryByRole('img')).toBeNull();
     expect(await screen.findAllByRole('img')).toHaveLength(2);
     expect(screen.getAllByText('name:')).toHaveLength(2);
-    expect(global.fetch).toHaveBeenCalled();
+    expect(global.fetch).not.toHaveBeenCalled();
   });
 });

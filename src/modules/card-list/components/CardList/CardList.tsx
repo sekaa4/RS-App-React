@@ -1,41 +1,23 @@
 import Data from 'models/Data.type';
-import { useEffect, useState } from 'react';
 import Card from '../Card/Card';
 import cls from './CardList.module.scss';
 
-interface CardListState {
-  data: Data[] | null;
-}
-
 interface CardListProps {
-  data?: Data[];
+  data: Data[] | null;
+  form?: boolean;
 }
 
 const CardList = (props: CardListProps) => {
-  const { data: dataProps } = props;
-  const [cardListState, setCardListState] = useState<CardListState>({
-    data: dataProps ?? null,
-  });
-  const { data } = cardListState;
+  const { data, form } = props;
 
-  useEffect(() => {
-    const getData = async () => {
-      const res = await fetch(`./Data.json`);
-      const dataFetch = data ?? (await res.json());
-      const newData = dataProps ?? dataFetch;
-      setCardListState((oldState) => ({ ...oldState, data: newData }));
-    };
-    getData();
-  }, [dataProps, data]);
-
-  return cardListState.data ? (
+  return data && data.length !== 0 ? (
     <div className={cls['card-list']}>
-      {cardListState.data.map((dataCharacter: Data) => (
-        <Card key={dataCharacter.id} data={dataCharacter} />
+      {data.map((dataCharacter: Data) => (
+        <Card key={dataCharacter.id} data={dataCharacter} form={form} />
       ))}
     </div>
   ) : (
-    <div>isLoading...</div>
+    <div className={cls['not-found']}>Search not found</div>
   );
 };
 

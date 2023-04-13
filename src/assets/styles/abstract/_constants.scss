@@ -8,7 +8,10 @@
   --color-header-background: rgb(255, 255, 255);
   --color-card-background: rgb(255, 255, 255);
   --color-disabled: rgba(80, 80, 80, 1);
+  --overlay-color: rgba(0 0 0 / 70%);
 
   --content-width: 115rem;
   --content-width-create: 100rem;
+
+  --modal-z-index: 10;
 }

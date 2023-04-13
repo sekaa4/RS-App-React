@@ -1,18 +1,63 @@
-.home {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  row-gap: 2rem;
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--modal-z-index);
 }
 
-.home__search-bar {
+.overlay {
   display: flex;
   justify-content: center;
-  border-radius: 4px;
-  overflow: hidden;
+  align-items: center;
   width: 100%;
-  column-gap: 2rem;
+  height: 100%;
+  background-color: var(--overlay-color);
+}
+
+.modal-window {
+  position: relative;
+  padding: 2rem;
+  width: max(30%, 50rem);
+  height: max(30%, 50rem);
+  margin: auto;
+  border: 1px solid var(--overlay-color);
+  border-radius: 1.5rem;
+  background-color: var(--color-card-background);
+  transition: transform 0.6s;
+  transform: scale(1);
+}
+
+.opened {
+  .modal-window {
+    transform: scale(0.5);
+  }
+}
+
+.close-modal {
+  position: absolute;
+  top: 1rem;
+  right: 2rem;
+  font-size: 3rem;
+  background-color: var(--color-card-background);
+  width: 40px;
+}
+
+.image {
+  display: block;
+  margin: 0 auto;
+  height: 24rem;
+  width: 65%;
+  border-radius: 5px;
+  object-fit: fill;
+}
+
+.description {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.8rem;
+  padding: 1rem;
 }
 
 .modal-loading {
@@ -23,7 +68,7 @@
 
 .loader {
   margin: 0 auto;
-  top: 50%;
+  top: 25%;
   color: var(--overlay-color);
   font-size: 45px;
   text-indent: -9999em;

@@ -1,7 +1,6 @@
 import GenderType from './Gender.type';
 
 interface Data {
-  userId: number;
   id: number;
   name: string;
   body: string;

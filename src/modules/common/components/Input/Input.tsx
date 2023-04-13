@@ -9,25 +9,28 @@ interface InputProps {
   placeholder?: string;
   inputStyles?: string[];
   handleChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  handleKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 const Input = (props: InputProps) => {
   const {
+    id,
     classNames = '',
     type = 'text',
     value = '',
-    id,
     placeholder,
     inputStyles = [],
     handleChange,
+    handleKeyDown,
   } = props;
 
   return (
     <label htmlFor={id} className={[...classNames].join(' ')}>
       <input
+        id={id}
         type={type}
         onChange={handleChange}
+        onKeyDown={handleKeyDown}
         value={value}
-        id={id}
         placeholder={placeholder}
         className={[cls.input, ...inputStyles].join(' ')}
       />
