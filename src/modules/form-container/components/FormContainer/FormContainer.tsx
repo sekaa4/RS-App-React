@@ -1,5 +1,5 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import createDataObject from 'utils/createDataObject';
 import Data from 'models/Data.type';
 import { InputType } from 'models/InputType';
@@ -16,44 +16,33 @@ import {
   UncontrolledSelect,
   UncontrolledTextArea,
 } from 'modules/common/index';
+import { useAppDispatch, useAppSelector } from 'redux/redux';
+import { formDataSlice } from 'store/reducers/FormDataSlice';
 import RadioContainer from '../RadioContainer/RadioContainer';
 import cls from './FormContainer.module.scss';
-
-interface FormContainerState {
-  dataCard: Data[] | null;
-}
 
 const FormContainer = () => {
   const refForm = useRef<HTMLFormElement>(null);
   const refSubmit = useRef<HTMLInputElement>(null);
+  const dispatch = useAppDispatch();
+  const { dataForm } = useAppSelector((state) => state.formDataReducer);
   const {
     register,
     handleSubmit,
-    formState: { errors, submitCount, isValid, isSubmitSuccessful },
+    formState: { errors, isValid, isSubmitSuccessful },
     reset,
   } = useForm<FormInput>({
     mode: 'onSubmit',
     reValidateMode: 'onSubmit',
   });
 
-  const [formContainerState, setFormContainerState] = useState<FormContainerState>({
-    dataCard: null,
-  });
-  const { dataCard } = formContainerState;
-
   const updateStateCardFromForm = (dataObj: Data) => {
-    setFormContainerState((oldState) => {
-      const { dataCard: data } = oldState;
-      if (data) {
-        return { ...oldState, dataCard: [...data, dataObj] };
-      }
-      return { ...oldState, dataCard: [dataObj] };
-    });
+    dispatch(formDataSlice.actions.writeFormData(dataObj));
   };
 
   const submitHandler: SubmitHandler<FormInput> = (data: FormInput) => {
     if (isValid) {
-      const dataObj = createDataObject(data, submitCount);
+      const dataObj = createDataObject(data);
       updateStateCardFromForm(dataObj);
       reset();
     }
@@ -145,8 +134,8 @@ const FormContainer = () => {
           <Button refSubmit={refSubmit} text="Create Card" />
         </div>
       </Form>
-      {dataCard ? (
-        <CardList data={dataCard} form />
+      {dataForm.length !== 0 ? (
+        <CardList data={dataForm} form />
       ) : (
         <div className={cls['not-found']}>
           Cards not found, please fill the form and create card
