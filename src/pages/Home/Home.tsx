@@ -1,13 +1,14 @@
 import CardList from 'modules/card-list/components/CardList/CardList';
 import InputSearch from 'modules/input-search/components/InputSearch/InputSearch';
 import { Button } from 'modules/common';
-import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import { useState, useRef, useCallback, useMemo } from 'react';
 import Modal from 'modules/modal/components/Modal/Modal';
 import { useAppDispatch, useAppSelector } from 'redux/redux';
 import { searchStringSlice } from 'store/reducers/SearchStringSlice';
-import fetchMainData from 'store/reducers/ActionCreators';
+import cardDataAPI from 'services/CardDataService';
 import cls from './Home.module.scss';
 import { ModalState, ContextHome } from './ContextHome';
+// import { error } from 'modules/common/uncontrolled-components/UncontrolledInput/UncontrolledInput.module.scss';
 
 const Home = () => {
   const [modalData, setModalCard] = useState<ModalState>({
@@ -15,13 +16,16 @@ const Home = () => {
     isLoading: false,
     id: null,
   });
+  // const { mainData, isLoading, error } = useAppSelector((state) => state.mainDataReducer);
+  const { value } = useAppSelector((state) => state.searchLineReducer);
+
+  const { isError, isLoading, isFetching, data, refetch, error } =
+    cardDataAPI.useFetchAllCardDataQuery(value);
 
   const refSearchValue = useRef<string>('');
   const { isModal } = modalData;
 
   const dispatch = useAppDispatch();
-  const { mainData, isLoading, error } = useAppSelector((state) => state.mainDataReducer);
-  const { value } = useAppSelector((state) => state.searchLineReducer);
 
   const handleClick = () => {
     if (value === refSearchValue.current) return;
@@ -72,9 +76,9 @@ const Home = () => {
   //   getData();
   // }, [dispatch, value]);
 
-  useEffect(() => {
-    dispatch(fetchMainData(value));
-  }, [dispatch, value]);
+  // useEffect(() => {
+  //   dispatch(fetchMainData(value));
+  // }, [dispatch, value]);
 
   return (
     <ContextHome.Provider value={initialContextValue}>
@@ -84,8 +88,8 @@ const Home = () => {
           <InputSearch refSearchValue={refSearchValue} handleKeyDown={handleClick} />
           <Button text="search" handleClick={handleClick} />
         </div>
-        {isLoading && <div className={cls.loader}>Loading...</div>}
-        {(error && <div>{error}</div>) || (mainData && <CardList data={mainData} />)}
+        {isFetching && <div className={cls.loader}>Loading...</div>}
+        {(error && <div>{}</div>) || (data && <CardList data={data} />)}
       </div>
       {isModal && <Modal modalData={modalData} />}
     </ContextHome.Provider>

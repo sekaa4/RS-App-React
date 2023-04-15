@@ -1,14 +1,18 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import mainDataReducer from './reducers/MainDataSlice';
+import cardDataAPI from 'services/CardDataService';
 import searchLineReducer from './reducers/SearchStringSlice';
 import formDataReducer from './reducers/FormDataSlice';
 
-const rootReducer = combineReducers({ mainDataReducer, searchLineReducer, formDataReducer });
+const rootReducer = combineReducers({
+  searchLineReducer,
+  formDataReducer,
+  [cardDataAPI.reducerPath]: cardDataAPI.reducer,
+});
 
 export const setupStore = () => {
   return configureStore({
     reducer: rootReducer,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(cardDataAPI.middleware),
   });
 };
 
