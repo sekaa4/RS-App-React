@@ -1,7 +1,5 @@
-import Data from 'models/Data.type';
-import URLConstants from 'models/URLConstants';
 import { ModalState, useContextHome } from 'pages/Home/ContextHome';
-import { useEffect, useState } from 'react';
+import cardDataAPI from 'services/CardDataService';
 import Portal from 'utils/Portal';
 
 import cls from './Modal.module.scss';
@@ -11,37 +9,17 @@ interface ModalData {
 }
 
 const Modal = (props: ModalData) => {
-  const [modalCard, setModalCard] = useState<Data | null>(null);
-  const [isLoading, setLoading] = useState<boolean>(true);
   const {
     modalData: { id },
   } = props;
+  const { isFetching, data } = cardDataAPI.useFetchModalCardDataQuery(id);
   const { handleClickCloseCardModal } = useContextHome();
+  const modalCard = data && data.length >= 1 ? data[0] : null;
 
-  useEffect(() => {
-    const abortController = new AbortController();
-    const getData = async (idData: number) => {
-      try {
-        const res = await fetch(`${URLConstants.BASE_URL}?id=${idData}`, {
-          signal: abortController.signal,
-        });
-        const newData: Data[] = await res.json();
-        setModalCard({ ...newData[0] });
-      } catch (err) {
-        if (err instanceof Error) {
-          // eslint-disable-next-line no-console
-          console.log(err);
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-    if (id && isLoading) getData(id);
-  }, [id, isLoading]);
   return (
     <Portal>
       <div
-        className={isLoading ? [cls.modal, cls.opened].join(' ') : cls.modal}
+        className={isFetching ? [cls.modal, cls.opened].join(' ') : cls.modal}
         onClick={handleClickCloseCardModal}
       >
         <div className={cls.overlay}>
@@ -58,7 +36,7 @@ const Modal = (props: ModalData) => {
             >
               ✖
             </button>
-            {modalCard && !isLoading && (
+            {modalCard && !isFetching && (
               <div>
                 <img src={modalCard.img} alt="cat" className={cls.image} />
                 <div className={cls.description}>
@@ -83,7 +61,7 @@ const Modal = (props: ModalData) => {
                 </div>
               </div>
             )}
-            {isLoading ? <div className={cls.loader}>Loading...</div> : false}
+            {isFetching ? <div className={cls.loader}>Loading...</div> : false}
           </div>
         </div>
       </div>

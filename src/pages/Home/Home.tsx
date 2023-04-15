@@ -8,7 +8,6 @@ import { searchStringSlice } from 'store/reducers/SearchStringSlice';
 import cardDataAPI from 'services/CardDataService';
 import cls from './Home.module.scss';
 import { ModalState, ContextHome } from './ContextHome';
-// import { error } from 'modules/common/uncontrolled-components/UncontrolledInput/UncontrolledInput.module.scss';
 
 const Home = () => {
   const [modalData, setModalCard] = useState<ModalState>({
@@ -16,11 +15,9 @@ const Home = () => {
     isLoading: false,
     id: null,
   });
-  // const { mainData, isLoading, error } = useAppSelector((state) => state.mainDataReducer);
   const { value } = useAppSelector((state) => state.searchLineReducer);
 
-  const { isError, isLoading, isFetching, data, refetch, error } =
-    cardDataAPI.useFetchAllCardDataQuery(value);
+  const { isFetching, data, error } = cardDataAPI.useFetchAllCardDataQuery(value);
 
   const refSearchValue = useRef<string>('');
   const { isModal } = modalData;
@@ -58,27 +55,6 @@ const Home = () => {
     }),
     [handleClickCardModal, handleClickCloseCardModal, modalData]
   );
-
-  // useEffect(() => {
-  //   const getData = async () => {
-  //     try {
-  //       const res = await fetch(`${URLConstants.BASE_URL}?q=${value}`);
-  //       const newData = await res.json();
-  //       dispatch(mainDataSlice.actions.writeMainData(newData));
-  //     } catch (err) {
-  //       if (err instanceof Error) {
-  //         throw new Error(err.message);
-  //       }
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  //   getData();
-  // }, [dispatch, value]);
-
-  // useEffect(() => {
-  //   dispatch(fetchMainData(value));
-  // }, [dispatch, value]);
 
   return (
     <ContextHome.Provider value={initialContextValue}>
