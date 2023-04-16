@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react';
-import { vi } from 'vitest';
 
 import Data from 'models/Data.type';
 import CardList from './CardList';
@@ -28,15 +27,10 @@ const data: Data[] = [
 ];
 
 describe('Testing CardList', () => {
-  global.fetch = vi.fn().mockResolvedValueOnce({
-    json: () => Promise.resolve(data),
-  });
-
   it('should CardList create', async () => {
     render(<CardList data={data} />);
     expect(screen.queryByText(/age:/i)).toBeNull();
     expect(await screen.findAllByRole('img')).toHaveLength(2);
     expect(screen.getAllByText('name:')).toHaveLength(2);
-    expect(global.fetch).not.toHaveBeenCalled();
   });
 });

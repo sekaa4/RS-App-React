@@ -7,6 +7,7 @@ const cardDataAPI = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: URLConstants.BASE_URL,
   }),
+  refetchOnMountOrArgChange: true,
   endpoints: (build) => ({
     fetchAllCardData: build.query<Data[], string>({
       query: (value = '') => ({
