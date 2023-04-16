@@ -1,4 +1,4 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore, PreloadedState } from '@reduxjs/toolkit';
 import cardDataAPI from 'services/CardDataService';
 import searchLineReducer from './reducers/SearchStringSlice';
 import formDataReducer from './reducers/FormDataSlice';
@@ -9,9 +9,10 @@ const rootReducer = combineReducers({
   [cardDataAPI.reducerPath]: cardDataAPI.reducer,
 });
 
-export const setupStore = () => {
+export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
   return configureStore({
     reducer: rootReducer,
+    preloadedState,
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(cardDataAPI.middleware),
   });
 };
