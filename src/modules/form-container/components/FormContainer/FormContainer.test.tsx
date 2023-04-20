@@ -1,8 +1,8 @@
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Data from 'models/Data.type';
 import { vi } from 'vitest';
-
+import renderWithProviders from 'utils/testUtils';
 import FormContainer from './FormContainer';
 
 const data: Data[] = [
@@ -34,7 +34,7 @@ global.fetch = vi.fn().mockResolvedValueOnce({
 
 beforeEach(() => {
   cleanup();
-  render(<FormContainer />);
+  renderWithProviders(<FormContainer />);
 });
 
 describe('Testing FormContainer created', () => {

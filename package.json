@@ -17,9 +17,12 @@
     "deploy": "npm run build && npx gh-pages -d dist"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.3",
+    "@types/react-redux": "^7.1.25",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.43.8",
+    "react-redux": "^8.0.5",
     "react-router-dom": "^6.8.2"
   },
   "devDependencies": {
@@ -46,6 +49,7 @@
     "husky": "^8.0.3",
     "jsdom": "^21.1.0",
     "lint-staged": "^13.1.2",
+    "msw": "^1.2.1",
     "prettier": "^2.8.4",
     "sass": "^1.59.3",
     "typescript": "^4.9.3",
