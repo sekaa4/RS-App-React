@@ -31,7 +31,11 @@
       }
     ]
   },
-  "include": ["vite.config.ts", ".eslintrc.cjs", "./src/**/*", "styled.d.ts"],
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node"
+  },
+  "include": ["vite.config.ts", "server.ts", ".eslintrc.cjs", "./src/**/*", "styled.d.ts"],
   "references": [
     {
       "path": "./tsconfig.node.json"
