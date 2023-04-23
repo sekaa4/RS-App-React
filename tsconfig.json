@@ -33,9 +33,17 @@
   },
   "ts-node": {
     "esm": true,
+    "transpileOnly": true,
     "experimentalSpecifierResolution": "node"
   },
-  "include": ["vite.config.ts", "server.ts", ".eslintrc.cjs", "./src/**/*", "styled.d.ts"],
+  "include": [
+    "vite.config.ts",
+    "server.ts",
+    ".eslintrc.cjs",
+    "./src/**/*",
+    "styled.d.ts",
+    "react-app-env.d.ts"
+  ],
   "references": [
     {
       "path": "./tsconfig.node.json"
