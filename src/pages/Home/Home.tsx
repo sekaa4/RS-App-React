@@ -1,7 +1,7 @@
 import CardList from 'modules/card-list/components/CardList/CardList';
 import InputSearch from 'modules/input-search/components/InputSearch/InputSearch';
 import { Button } from 'modules/common';
-import { useState, useRef, useCallback, useMemo } from 'react';
+import { useState, useRef, useCallback, useMemo, useEffect } from 'react';
 import Modal from 'modules/modal/components/Modal/Modal';
 import { useAppDispatch, useAppSelector } from 'redux/redux';
 import { searchStringSlice } from 'store/reducers/SearchStringSlice';
@@ -16,18 +16,23 @@ const Home = () => {
     id: null,
   });
   const { value } = useAppSelector((state) => state.searchLineReducer);
+  const [str, setStr] = useState(value);
 
-  const { isFetching, data, error } = cardDataAPI.useFetchAllCardDataQuery(value);
+  const { isFetching, data, error } = cardDataAPI.useFetchAllCardDataQuery(str);
+
+  useEffect(() => {
+    setStr(value);
+  }, [value]);
 
   const refSearchValue = useRef<string>('');
   const { isModal } = modalData;
 
   const dispatch = useAppDispatch();
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     if (value === refSearchValue.current) return;
     dispatch(searchStringSlice.actions.writeSearchLine(refSearchValue.current));
-  };
+  }, [dispatch, value]);
 
   const handleClickCardModal = useCallback((id: number) => {
     const newModalState = {
@@ -65,7 +70,7 @@ const Home = () => {
           <Button text="search" handleClick={handleClick} />
         </div>
         {isFetching && <div className={cls.loader}>Loading...</div>}
-        {(error && <div>{}</div>) || (data && <CardList data={data} />)}
+        {(error && <div>{}</div>) || (!isFetching && data && <CardList data={data} />)}
       </div>
       {isModal && <Modal modalData={modalData} />}
     </ContextHome.Provider>
