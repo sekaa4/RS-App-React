@@ -1,16 +1,25 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
+import {
+  buildCreateApi,
+  coreModule,
+  reactHooksModule,
+  fetchBaseQuery,
+} from '@reduxjs/toolkit/dist/query/react';
 import Data from 'models/Data.type';
 import URLConstants from 'models/URLConstants';
+
+const createApi = buildCreateApi(
+  coreModule(),
+  reactHooksModule({ unstable__sideEffectsInRender: true })
+);
 
 const cardDataAPI = createApi({
   reducerPath: 'cardDataAPI',
   baseQuery: fetchBaseQuery({
     baseUrl: URLConstants.BASE_URL,
   }),
-  refetchOnMountOrArgChange: true,
   endpoints: (build) => ({
     fetchAllCardData: build.query<Data[], string>({
-      query: (value = '') => ({
+      query: (value) => ({
         url: '/',
         params: {
           q: value,
