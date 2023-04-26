@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { rest } from 'msw';
 import URLConstants from 'models/URLConstants';
 import Data from 'models/Data.type';

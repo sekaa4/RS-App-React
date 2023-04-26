@@ -3,7 +3,6 @@ import { Home, About, Form, NotFound } from 'pages';
 import Layout from 'modules/layout';
 import Endpoints from 'models/Endpoints';
 
-// eslint-disable-next-line import/prefer-default-export
 const App = () => {
   return (
     <Routes>

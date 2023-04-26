@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable import/no-extraneous-dependencies */
 import fsp from 'node:fs/promises';
 import express from 'express';
 import { ViteDevServer } from 'vite';
