@@ -4,10 +4,21 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tsconfigPaths from 'vite-tsconfig-paths';
+import istanbul from 'vite-plugin-istanbul';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), tsconfigPaths()],
+  plugins: [
+    react(),
+    tsconfigPaths(),
+    istanbul({
+      cypress: true,
+      requireEnv: false,
+    }),
+  ],
+  build: {
+    sourcemap: true,
+  },
   test: {
     globals: true,
     environment: 'jsdom',
@@ -25,6 +36,7 @@ export default defineConfig({
   },
   server: {
     open: true,
+    port: 5173,
   },
   css: {
     devSourcemap: true,
