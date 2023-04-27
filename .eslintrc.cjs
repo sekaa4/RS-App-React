@@ -13,8 +13,17 @@ module.exports = {
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
+    'plugin:cypress/recommended',
   ],
-  overrides: [],
+  overrides: [
+    {
+      files: ['cypress/**/*.ts', 'cypress.config.ts', 'src/**/*.cy.tsx'],
+      parserOptions: {
+        project: ['cypress/tsconfig.json'],
+      },
+      extends: ['plugin:cypress/recommended'],
+    },
+  ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
