@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import fsp from 'node:fs/promises';
 import express from 'express';
 import { ViteDevServer } from 'vite';
@@ -24,12 +23,10 @@ if (!isProduction) {
 
   app.use(vite.middlewares);
 } else {
+  const compression = (await import('compression')).default;
   const sirv = (await import('sirv')).default;
-  app.use(
-    sirv('dist/client', {
-      gzip: true,
-    })
-  );
+  app.use(compression());
+  app.use(base, sirv('./dist/client', { extensions: [] }));
 }
 
 app.use('*', async (req, res) => {
@@ -48,9 +45,9 @@ app.use('*', async (req, res) => {
 
       render = (await vite.ssrLoadModule('/src/ServerApp.tsx')).render;
     } else {
+      const prodScript = './dist/server/ServerApp';
       template = templateHtml;
-      // @ts-ignore
-      render = (await import('./dist/server/ServerApp')).render;
+      render = (await import(prodScript)).render;
     }
 
     const parts = template.split('<!--app-html-->');

@@ -1,7 +1,13 @@
-import { combineReducers, configureStore, PreloadedState } from '@reduxjs/toolkit';
+import * as rtkQuery from '@reduxjs/toolkit';
+import type { PreloadedState } from '@reduxjs/toolkit';
 import cardDataAPI from 'services/CardDataService';
 import searchLineReducer from './reducers/SearchStringSlice';
 import formDataReducer from './reducers/FormDataSlice';
+
+type TypeRtkQuery = typeof rtkQuery & { default?: unknown };
+
+const { combineReducers, configureStore } = ((rtkQuery as TypeRtkQuery).default ??
+  rtkQuery) as typeof rtkQuery;
 
 const rootReducer = combineReducers({
   searchLineReducer,

@@ -1,11 +1,11 @@
-import {
-  buildCreateApi,
-  coreModule,
-  reactHooksModule,
-  fetchBaseQuery,
-} from '@reduxjs/toolkit/dist/query/react';
+import * as rtkQuery from '@reduxjs/toolkit/dist/query/react';
 import Data from 'models/Data.type';
 import URLConstants from 'models/URLConstants';
+
+type TypeRtkQuery = typeof rtkQuery & { default?: unknown };
+
+const { buildCreateApi, coreModule, reactHooksModule, fetchBaseQuery } = ((rtkQuery as TypeRtkQuery)
+  .default ?? rtkQuery) as typeof rtkQuery;
 
 const createApi = buildCreateApi(
   coreModule(),
