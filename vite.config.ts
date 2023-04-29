@@ -26,7 +26,7 @@ export default defineConfig({
     setupFiles: ['./src/setupTests.ts'],
     coverage: {
       include: ['src/*/'],
-      exclude: ['src/*.{ts,tsx}', 'src/models/*.{ts,tsx}'],
+      exclude: ['src/*.{ts,tsx}', 'src/models/*.{ts,tsx}', 'src/**/*.cy.{ts,tsx}'],
       enabled: true,
       provider: 'c8', // or istanbul'
       all: true,
