@@ -14,6 +14,7 @@ export default defineConfig({
     istanbul({
       cypress: true,
       requireEnv: false,
+      forceBuildInstrument: true,
     }),
   ],
   build: {
