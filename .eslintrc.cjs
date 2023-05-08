@@ -13,8 +13,17 @@ module.exports = {
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
+    'plugin:cypress/recommended',
   ],
-  overrides: [],
+  overrides: [
+    {
+      files: ['cypress/**/*.ts', 'cypress.config.ts', 'src/**/*.cy.tsx'],
+      parserOptions: {
+        project: ['cypress/tsconfig.json'],
+      },
+      extends: ['plugin:cypress/recommended'],
+    },
+  ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
@@ -53,6 +62,10 @@ module.exports = {
     'react/require-default-props': 'off',
     'jsx-a11y/no-static-element-interactions': 'off',
     'jsx-a11y/click-events-have-key-events': 'off',
+    'import/no-extraneous-dependencies': [
+      'error',
+      { devDependencies: true, optionalDependencies: false, peerDependencies: false },
+    ],
   },
   settings: {
     react: {

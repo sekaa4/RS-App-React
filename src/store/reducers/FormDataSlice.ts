@@ -1,5 +1,10 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import * as rtkQuery from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
 import Data from 'models/Data.type';
+
+type TypeRtkQuery = typeof rtkQuery & { default?: unknown };
+
+const { createSlice } = ((rtkQuery as TypeRtkQuery).default ?? rtkQuery) as typeof rtkQuery;
 
 interface FormContainerState {
   dataForm: Data[];

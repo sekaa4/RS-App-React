@@ -29,7 +29,7 @@ const Header = (props: WithRouterProps) => {
       title = Constants.FORM_PAGE;
       break;
     default:
-      title = Constants.FORM_PAGE;
+      title = Constants.NOT_FOUND_PAGE;
       break;
   }
 

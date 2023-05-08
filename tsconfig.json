@@ -31,7 +31,20 @@
       }
     ]
   },
-  "include": ["vite.config.ts", ".eslintrc.cjs", "./src/**/*", "styled.d.ts"],
+  "ts-node": {
+    "esm": true,
+    "transpileOnly": true,
+    "experimentalSpecifierResolution": "node"
+  },
+  "include": [
+    "vite.config.ts",
+    "server.ts",
+    ".eslintrc.cjs",
+    "./src/**/*",
+    "styled.d.ts",
+    "react-app-env.d.ts"
+  ],
+  "exclude": ["node_modules", "cypress.config.ts", "src/**/*.cy.tsx"],
   "references": [
     {
       "path": "./tsconfig.node.json"

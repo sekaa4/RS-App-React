@@ -3,9 +3,11 @@ import { BrowserRouter } from 'react-router-dom';
 import { setupStore } from 'store/store';
 import App from './App';
 
-const store = setupStore();
-
 const WrappedApp = () => {
+  const store = setupStore(window.PRELOADEDSTATE);
+
+  delete window.PRELOADEDSTATE;
+
   return (
     <BrowserRouter>
       <Provider store={store}>
