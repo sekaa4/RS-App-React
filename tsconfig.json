@@ -1,0 +1,53 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "allowJs": false,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "noImplicitAny": true,
+    "noFallthroughCasesInSwitch": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "baseUrl": "./src",
+    "plugins": [
+      {
+        "name": "typescript-plugin-css-modules",
+        "options": {
+          "rendererOptions": {
+            "sass": {
+              "loadPaths": ["./"]
+            }
+          }
+        }
+      }
+    ]
+  },
+  "ts-node": {
+    "esm": true,
+    "transpileOnly": true,
+    "experimentalSpecifierResolution": "node"
+  },
+  "include": [
+    "vite.config.ts",
+    "server.ts",
+    ".eslintrc.cjs",
+    "./src/**/*",
+    "styled.d.ts",
+    "react-app-env.d.ts"
+  ],
+  "exclude": ["node_modules", "cypress.config.ts", "src/**/*.cy.tsx"],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ]
+}

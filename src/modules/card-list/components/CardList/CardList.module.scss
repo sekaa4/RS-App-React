@@ -1,0 +1,32 @@
+@import '../../../../assets/styles/abstract/mixins';
+
+.card-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  column-gap: 2%;
+  row-gap: 2rem;
+  width: 100%;
+
+  & > * {
+    flex-basis: 31%;
+  }
+
+  @include media-tablet {
+    & > * {
+      flex-basis: 48%;
+    }
+  }
+
+  @include media-small-tablet {
+    & > * {
+      flex-basis: 98%;
+    }
+  }
+}
+
+.not-found {
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: bold;
+}
